@@ -1,6 +1,6 @@
 module "tfe_prereqs_w2" {
   # source = "git@github.com:nphilbrook/terraform-aws-tfe-prereqs?ref=nphilbrook_git_ssh"
-  source = "git@github.com:hashicorp-services/terraform-aws-tfe-prereqs?ref=nphilbrook_git_ssh_validate_kms"
+  source = "git@github.com:hashicorp-services/terraform-aws-tfe-prereqs?ref=7c212d0"
   # source = "/home/nphilbrook/repos/hvd/terraform-aws-tfe-prereqs"
 
   # --- Common --- #
