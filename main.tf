@@ -2,14 +2,14 @@ module "tfe_prereqs_w2" {
   source = "git@github.com:nphilbrook/terraform-aws-tfe-prereqs?ref=nphilbrook_git_ssh"
 
   # --- Common --- #
-  friendly_name_prefix = "tfe"
-  common_tags          = {
-  App   = "tfe"
-  Env   = "sbx"
-    Owner = "nick.philbrook@hashicorp.com"
-    "created-by" = "terraform"
+  friendly_name_prefix = "primary"
+  common_tags = {
+    App                = "tfe"
+    Env                = "sbx"
+    Owner              = "nick.philbrook@hashicorp.com"
+    "created-by"       = "terraform"
     "source_workspace" = var.TFC_WORKSPACE_SLUG
-}
+  }
 
   # --- Networking --- #
   create_vpc              = true
@@ -42,4 +42,7 @@ module "tfe_prereqs_w2" {
   # --- CloudWatch (optional) --- #
   create_cloudwatch_log_group = true
   cloudwatch_log_group_name   = "tfe-logs"
+
+  # TODO: fix this
+  kms_cmk_alias = "alias/foobar"
 }

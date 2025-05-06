@@ -3,7 +3,7 @@ terraform {
     organization = "philbrook"
 
     workspaces {
-      name    = "tfe-hvd"
+      name = "tfe-hvd"
     }
   }
 }
