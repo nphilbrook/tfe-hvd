@@ -1,5 +1,7 @@
 module "tfe_prereqs_w2" {
-  source = "git@github.com:nphilbrook/terraform-aws-tfe-prereqs?ref=nphilbrook_git_ssh"
+  # source = "git@github.com:nphilbrook/terraform-aws-tfe-prereqs?ref=nphilbrook_git_ssh"
+  source = "git@github.com:hashicorp-services/terraform-aws-tfe-prereqs?ref=nphilbrook_git_ssh_validate_kms"
+  # source = "/home/nphilbrook/repos/hvd/terraform-aws-tfe-prereqs"
 
   # --- Common --- #
   friendly_name_prefix = "primary"
@@ -29,9 +31,9 @@ module "tfe_prereqs_w2" {
 
   # --- TLS certificates --- #
   create_tls_certs                  = true
-  tls_cert_fqdn                     = "tfe.philbrook.sbx.hashidemos.io"
+  tls_cert_fqdn                     = "tfe.nick-philbrook.sbx.hashidemos.io"
   tls_cert_email_address            = "nick.philbrook@hashicorp.com"
-  tls_cert_route53_public_zone_name = "philbrook.sbx.hashidemos.io"
+  tls_cert_route53_public_zone_name = "nick-philbrook.sbx.hashidemos.io"
   create_local_cert_files           = true
 
   # --- Secrets Manager --- #
@@ -42,7 +44,4 @@ module "tfe_prereqs_w2" {
   # --- CloudWatch (optional) --- #
   create_cloudwatch_log_group = true
   cloudwatch_log_group_name   = "tfe-logs"
-
-  # TODO: fix this
-  kms_cmk_alias = "alias/foobar"
 }
