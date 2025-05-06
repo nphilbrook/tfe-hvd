@@ -1,44 +1,45 @@
-module "tfe_prereqs" {
-  source = "github.com/hashicorp-services/terraform-aws-tfe-prereqs?ref=a2079f4e2c658ed2b75254c522bbc7be0c1ec4a4"
+module "tfe_prereqs_w2" {
+  source = "git@github.com:nphilbrook/terraform-aws-tfe-prereqs?ref=nphilbrook_git_ssh"
 
   # --- Common --- #
-  friendly_name_prefix = var.friendly_name_prefix
-  common_tags          = var.common_tags
+  friendly_name_prefix = "tfe"
+  common_tags          = {
+  App   = "tfe"
+  Env   = "sbx"
+    Owner = "nick.philbrook@hashicorp.com"
+    "created-by" = "terraform"
+    "source_workspace" = var.TFC_WORKSPACE_SLUG
+}
 
   # --- Networking --- #
-  create_vpc              = var.create_vpc
-  vpc_cidr                = var.vpc_cidr
-  lb_subnet_cidrs_public  = var.lb_subnet_cidrs_public
-  lb_subnet_cidrs_private = var.lb_subnet_cidrs_private
-  compute_subnet_cidrs    = var.compute_subnet_cidrs
-  db_subnet_cidrs         = var.db_subnet_cidrs
-  redis_subnet_cidrs      = var.redis_subnet_cidrs
-  ngw_subnet_cidrs        = var.ngw_subnet_cidrs
+  create_vpc              = true
+  vpc_cidr                = "10.8.0.0/16"
+  lb_subnet_cidrs_public  = ["10.8.0.0/24", "10.8.1.0/24", "10.8.2.0/24"]
+  lb_subnet_cidrs_private = ["10.8.3.0/24", "10.8.4.0/24", "10.8.5.0/24"]
+  compute_subnet_cidrs    = ["10.8.6.0/24", "10.8.7.0/24", "10.8.8.0/24"]
+  db_subnet_cidrs         = ["10.8.9.0/26", "10.8.9.64/26", "10.8.9.128/26"]
+  redis_subnet_cidrs      = ["10.8.10.0/26", "10.8.10.64/26", "10.8.10.128/26"]
+  ngw_subnet_cidrs        = ["10.8.11.0/26", "10.8.11.64/26", "10.8.11.128/26"]
 
   # --- Bastion --- #
-  create_bastion                 = var.create_bastion
-  bastion_instance_type          = var.bastion_instance_type
-  bastion_ec2_keypair_name       = var.bastion_ec2_keypair_name
-  bastion_cidr_allow_ingress_ssh = var.bastion_cidr_allow_ingress_ssh
+  create_bastion                 = true
+  bastion_instance_type          = "t3a.small"
+  bastion_ec2_keypair_name       = "terraform-key"
+  bastion_cidr_allow_ingress_ssh = ["69.53.107.107/32"]
 
   # --- TLS certificates --- #
-  create_tls_certs                  = var.create_tls_certs
-  tls_cert_fqdn                     = var.tls_cert_fqdn
-  tls_cert_email_address            = var.tls_cert_email_address
-  tls_cert_route53_public_zone_name = var.tls_cert_route53_public_zone_name
-  create_local_cert_files           = var.create_local_cert_files
+  create_tls_certs                  = true
+  tls_cert_fqdn                     = "tfe.philbrook.sbx.hashidemos.io"
+  tls_cert_email_address            = "nick.philbrook@hashicorp.com"
+  tls_cert_route53_public_zone_name = "philbrook.sbx.hashidemos.io"
+  create_local_cert_files           = true
 
   # --- Secrets Manager --- #
   tfe_database_password_secret_value  = var.tfe_database_password_secret_value
   tfe_redis_password_secret_value     = var.tfe_redis_password_secret_value
-  tfe_secrets_manager_replica_regions = var.tfe_secrets_manager_replica_regions
-
+  tfe_secrets_manager_replica_regions = toset(["us-east-2"])
 
   # --- CloudWatch (optional) --- #
-  create_cloudwatch_log_group = var.create_cloudwatch_log_group
-  cloudwatch_log_group_name   = var.cloudwatch_log_group_name
-
-  # --- KMS (optional) --- #
-  create_kms_cmk = var.create_kms_cmk
-  kms_cmk_alias  = var.kms_cmk_alias
+  create_cloudwatch_log_group = true
+  cloudwatch_log_group_name   = "tfe-logs"
 }
