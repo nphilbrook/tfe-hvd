@@ -26,7 +26,7 @@ module "tfe_prereqs_w2" {
   # --- Bastion --- #
   create_bastion                 = true
   bastion_instance_type          = "t3a.small"
-  bastion_ec2_keypair_name       = "terraform-key"
+  bastion_ec2_keypair_name       = "acme-w2"
   bastion_cidr_allow_ingress_ssh = ["69.53.107.107/32"]
 
   # --- TLS certificates --- #
