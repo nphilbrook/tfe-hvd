@@ -1,17 +1,12 @@
+
 module "tfe_prereqs_w2" {
   # source = "git@github.com:nphilbrook/terraform-aws-tfe-prereqs?ref=nphilbrook_git_ssh"
   source = "git@github.com:hashicorp-services/terraform-aws-tfe-prereqs?ref=7c212d0"
   # source = "/home/nphilbrook/repos/hvd/terraform-aws-tfe-prereqs"
 
   # --- Common --- #
-  friendly_name_prefix = "primary"
-  common_tags = {
-    App                = "tfe"
-    Env                = "sbx"
-    Owner              = "nick.philbrook@hashicorp.com"
-    "created-by"       = "terraform"
-    "source_workspace" = var.TFC_WORKSPACE_SLUG
-  }
+  friendly_name_prefix = local.friendly_name_prefix
+  common_tags          = local.common_tags
 
   # --- Networking --- #
   create_vpc              = true
@@ -27,14 +22,14 @@ module "tfe_prereqs_w2" {
   create_bastion                 = true
   bastion_instance_type          = "t3a.small"
   bastion_ec2_keypair_name       = "acme-w2"
-  bastion_cidr_allow_ingress_ssh = ["69.53.107.107/32"]
+  bastion_cidr_allow_ingress_ssh = local.juniper_junction
 
   # --- TLS certificates --- #
   create_tls_certs                  = true
-  tls_cert_fqdn                     = "tfe.nick-philbrook.sbx.hashidemos.io"
+  tls_cert_fqdn                     = local.tfe_fqdn
   tls_cert_email_address            = "nick.philbrook@hashicorp.com"
   tls_cert_route53_public_zone_name = "nick-philbrook.sbx.hashidemos.io"
-  create_local_cert_files           = true
+  create_local_cert_files           = false
 
   # --- Secrets Manager --- #
   tfe_database_password_secret_value  = var.tfe_database_password_secret_value
@@ -44,4 +39,44 @@ module "tfe_prereqs_w2" {
   # --- CloudWatch (optional) --- #
   create_cloudwatch_log_group = true
   cloudwatch_log_group_name   = "tfe-logs"
+}
+
+
+module "tfe" {
+  # source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
+  # version = "0.1.1"
+  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_pod_identity"
+  # --- Common --- #
+  friendly_name_prefix = local.friendly_name_prefix
+  common_tags          = local.common_tags
+
+  # --- TFE configuration settings --- #
+  tfe_fqdn                   = local.tfe_fqdn
+  create_helm_overrides_file = true
+
+  # --- Networking --- #
+  vpc_id                               = module.tfe_prereqs_w2.vpc_id
+  eks_subnet_ids                       = module.tfe_prereqs_w2.compute_subnet_ids
+  rds_subnet_ids                       = module.tfe_prereqs_w2.db_subnet_ids
+  redis_subnet_ids                     = module.tfe_prereqs_w2.redis_subnet_ids
+  cidr_allow_ingress_tfe_443           = concat(local.juniper_junction, local.gh_v4_hook_ranges)
+  cidr_allow_ingress_tfe_metrics_http  = local.juniper_junction
+  cidr_allow_ingress_tfe_metrics_https = local.juniper_junction
+
+  # --- IAM --- #
+  create_eks_oidc_provider      = true
+  create_aws_lb_controller_irsa = true
+  create_tfe_eks_irsa           = true
+
+  # --- EKS --- #
+  create_eks_cluster                 = true
+  eks_cluster_endpoint_public_access = false
+  eks_cluster_public_access_cidrs    = null
+
+  # --- Database --- #
+  tfe_database_password_secret_arn = module.tfe_prereqs_w2.tfe_database_password_secret_arn
+  rds_skip_final_snapshot          = false
+
+  # --- Redis --- #
+  tfe_redis_password_secret_arn = module.tfe_prereqs_w2.tfe_redis_password_secret_arn
 }
