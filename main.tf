@@ -1,7 +1,7 @@
 
 module "tfe_prereqs_w2" {
-  # source = "git@github.com:nphilbrook/terraform-aws-tfe-prereqs?ref=nphilbrook_git_ssh"
-  source = "git@github.com:hashicorp-services/terraform-aws-tfe-prereqs?ref=7c212d0"
+  source = "git@github.com:nphilbrook/terraform-aws-tfe-prereqs?ref=nphilbrook_sgs_iam_profiles"
+  # source = "git@github.com:hashicorp-services/terraform-aws-tfe-prereqs?ref=7c212d0"
   # source = "/home/nphilbrook/repos/hvd/terraform-aws-tfe-prereqs"
 
   # --- Common --- #
@@ -19,10 +19,11 @@ module "tfe_prereqs_w2" {
   ngw_subnet_cidrs        = ["10.8.11.0/26", "10.8.11.64/26", "10.8.11.128/26"]
 
   # --- Bastion --- #
-  create_bastion                 = true
-  bastion_instance_type          = "t3a.small"
-  bastion_ec2_keypair_name       = "acme-w2"
-  bastion_cidr_allow_ingress_ssh = local.juniper_junction
+  create_bastion                     = true
+  bastion_instance_type              = "t3a.small"
+  bastion_ec2_keypair_name           = "acme-w2"
+  bastion_cidr_allow_ingress_ssh     = local.juniper_junction
+  bastion_additional_security_groups = [module.tfe.eks_cluster_security_group_id]
 
   # --- TLS certificates --- #
   create_tls_certs                  = true
