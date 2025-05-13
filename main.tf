@@ -24,6 +24,7 @@ module "tfe_prereqs_w2" {
   bastion_ec2_keypair_name           = "acme-w2"
   bastion_cidr_allow_ingress_ssh     = local.juniper_junction
   bastion_additional_security_groups = [module.tfe.eks_cluster_security_group_id]
+  bastion_iam_instance_profile       = aws_iam_instance_profile.bastion_profile.name
 
   # --- TLS certificates --- #
   create_tls_certs                  = true
