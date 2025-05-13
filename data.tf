@@ -15,3 +15,4 @@ locals {
   gh_v4_hook_ranges = [for ip in jsondecode(data.terracurl_request.gh_meta.response).hooks : ip if !strcontains(ip, ":")]
 }
 
+data "aws_partition" "current" {}
