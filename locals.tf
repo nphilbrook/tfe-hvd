@@ -11,5 +11,5 @@ locals {
   tfe_fqdn         = "tfe.nick-philbrook.sbx.hashidemos.io"
   juniper_junction = ["69.53.107.107/32"]
   it_me            = "arn:aws:iam::590184029125:role/aws_nick.philbrook_test-developer"
+  r53_zone         = "nick-philbrook.sbx.hashidemos.io"
 }
-

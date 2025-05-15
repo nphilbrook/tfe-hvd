@@ -30,7 +30,7 @@ module "tfe_prereqs_w2" {
   create_tls_certs                  = true
   tls_cert_fqdn                     = local.tfe_fqdn
   tls_cert_email_address            = "nick.philbrook@hashicorp.com"
-  tls_cert_route53_public_zone_name = "nick-philbrook.sbx.hashidemos.io"
+  tls_cert_route53_public_zone_name = local.r53_zone
   create_local_cert_files           = false
 
   # --- Secrets Manager --- #
@@ -56,7 +56,7 @@ module "tfe" {
 
   # --- TFE configuration settings --- #
   tfe_fqdn                   = local.tfe_fqdn
-  create_helm_overrides_file = true
+  create_helm_overrides_file = false
 
   # --- Networking --- #
   vpc_id                               = module.tfe_prereqs_w2.vpc_id
