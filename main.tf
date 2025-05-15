@@ -37,6 +37,7 @@ module "tfe_prereqs_w2" {
   tfe_database_password_secret_value   = var.tfe_database_password_secret_value
   tfe_redis_password_secret_value      = var.tfe_redis_password_secret_value
   tfe_encryption_password_secret_value = var.tfe_encryption_password_secret_value
+  tfe_license_secret_value             = var.tfe_license_secret_value
   tfe_secrets_manager_replica_regions  = toset(["us-east-2"])
 
   # --- CloudWatch (optional) --- #
@@ -55,7 +56,7 @@ module "tfe" {
 
   # --- TFE configuration settings --- #
   tfe_fqdn                   = local.tfe_fqdn
-  create_helm_overrides_file = false
+  create_helm_overrides_file = true
 
   # --- Networking --- #
   vpc_id                               = module.tfe_prereqs_w2.vpc_id
