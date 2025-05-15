@@ -31,7 +31,7 @@ module "tfe_prereqs_w2" {
   tls_cert_fqdn                     = local.tfe_fqdn
   tls_cert_email_address            = "nick.philbrook@hashicorp.com"
   tls_cert_route53_public_zone_name = "nick-philbrook.sbx.hashidemos.io"
-  create_local_cert_files           = false
+  create_local_cert_files           = true
 
   # --- Secrets Manager --- #
   tfe_database_password_secret_value  = var.tfe_database_password_secret_value
