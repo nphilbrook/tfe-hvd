@@ -10,7 +10,7 @@ module "tfe_prereqs_w2" {
 
   # --- Networking --- #
   create_vpc              = true
-  vpc_cidr                = "10.8.0.0/16"
+  vpc_cidr                = local.vpc_cidr
   lb_subnet_cidrs_public  = ["10.8.0.0/24", "10.8.1.0/24", "10.8.2.0/24"]
   lb_subnet_cidrs_private = ["10.8.3.0/24", "10.8.4.0/24", "10.8.5.0/24"]
   compute_subnet_cidrs    = ["10.8.6.0/24", "10.8.7.0/24", "10.8.8.0/24"]
@@ -63,7 +63,7 @@ module "tfe" {
   eks_subnet_ids                       = module.tfe_prereqs_w2.compute_subnet_ids
   rds_subnet_ids                       = module.tfe_prereqs_w2.db_subnet_ids
   redis_subnet_ids                     = module.tfe_prereqs_w2.redis_subnet_ids
-  cidr_allow_ingress_tfe_443           = concat(local.juniper_junction, local.gh_v4_hook_ranges)
+  cidr_allow_ingress_tfe_443           = [local.vpc_cidr]
   cidr_allow_ingress_tfe_metrics_http  = local.juniper_junction
   cidr_allow_ingress_tfe_metrics_https = local.juniper_junction
 
