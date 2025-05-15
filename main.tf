@@ -55,7 +55,7 @@ module "tfe" {
 
   # --- TFE configuration settings --- #
   tfe_fqdn                   = local.tfe_fqdn
-  create_helm_overrides_file = true
+  create_helm_overrides_file = false
 
   # --- Networking --- #
   vpc_id                               = module.tfe_prereqs_w2.vpc_id
