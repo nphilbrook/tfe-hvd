@@ -4,9 +4,16 @@ variable "TFC_WORKSPACE_SLUG" {
 }
 
 variable "tfe_redis_password_secret_value" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "tfe_database_password_secret_value" {
-  type = string
+  type      = string
+  sensitive = true
+}
+
+variable "tfe_encryption_password_secret_value" {
+  type      = string
+  sensitive = true
 }
