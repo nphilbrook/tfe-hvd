@@ -49,7 +49,7 @@ module "tfe_prereqs_w2" {
 module "tfe" {
   # source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
   # version = "0.1.1"
-  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_pod_identity"
+  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=main"
   # --- Common --- #
   friendly_name_prefix = local.friendly_name_prefix
   common_tags          = local.common_tags
@@ -63,7 +63,7 @@ module "tfe" {
   eks_subnet_ids                       = module.tfe_prereqs_w2.compute_subnet_ids
   rds_subnet_ids                       = module.tfe_prereqs_w2.db_subnet_ids
   redis_subnet_ids                     = module.tfe_prereqs_w2.redis_subnet_ids
-  cidr_allow_ingress_tfe_443           = [local.vpc_cidr]
+  cidr_allow_ingress_tfe_443           = concat([local.vpc_cidr], local.juniper_junction, local.gh_v4_hook_ranges)
   cidr_allow_ingress_tfe_metrics_http  = local.juniper_junction
   cidr_allow_ingress_tfe_metrics_https = local.juniper_junction
 
@@ -84,3 +84,42 @@ module "tfe" {
   # --- Redis --- #
   tfe_redis_password_secret_arn = module.tfe_prereqs_w2.tfe_redis_password_secret_arn
 }
+
+# module "tfe_pi" {
+#   # source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
+#   # version = "0.1.1"
+#   source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_pod_identity"
+#   # --- Common --- #
+#   friendly_name_prefix = "pi"
+#   common_tags          = local.common_tags
+
+#   # --- TFE configuration settings --- #
+#   tfe_fqdn                   = local.tfe_pi_fqdn
+#   create_helm_overrides_file = true
+
+#   # --- Networking --- #
+#   vpc_id                               = module.tfe_prereqs_w2.vpc_id
+#   eks_subnet_ids                       = module.tfe_prereqs_w2.compute_subnet_ids
+#   rds_subnet_ids                       = module.tfe_prereqs_w2.db_subnet_ids
+#   redis_subnet_ids                     = module.tfe_prereqs_w2.redis_subnet_ids
+#   cidr_allow_ingress_tfe_443           = [local.vpc_cidr]
+#   cidr_allow_ingress_tfe_metrics_http  = local.juniper_junction
+#   cidr_allow_ingress_tfe_metrics_https = local.juniper_junction
+
+#   # --- IAM --- #
+#   create_eks_oidc_provider      = true
+#   create_aws_lb_controller_irsa = true
+#   create_tfe_eks_irsa           = true
+
+#   # --- EKS --- #
+#   create_eks_cluster                 = true
+#   eks_cluster_endpoint_public_access = false
+#   eks_cluster_public_access_cidrs    = null
+
+#   # --- Database --- #
+#   tfe_database_password_secret_arn = module.tfe_prereqs_w2.tfe_database_password_secret_arn
+#   rds_skip_final_snapshot          = false
+
+#   # --- Redis --- #
+#   tfe_redis_password_secret_arn = module.tfe_prereqs_w2.tfe_redis_password_secret_arn
+# }
