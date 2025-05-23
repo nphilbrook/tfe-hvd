@@ -2,7 +2,7 @@
 module "tfe_prereqs_w2" {
   source = "git@github.com:nphilbrook/terraform-aws-tfe-prereqs?ref=nphilbrook_sgs_iam_profiles"
   # source = "git@github.com:hashicorp-services/terraform-aws-tfe-prereqs?ref=7c212d0"
-  # source = "/home/nphilbrook/repos/hvd/terraform-aws-tfe-prereqs"
+  # source = "/home/nphilbrook/repos/mine/fork-terraform-aws-tfe-prereqs"
 
   # --- Common --- #
   friendly_name_prefix = local.friendly_name_prefix
@@ -59,11 +59,15 @@ module "tfe" {
   create_helm_overrides_file = false
 
   # --- Networking --- #
-  vpc_id                               = module.tfe_prereqs_w2.vpc_id
-  eks_subnet_ids                       = module.tfe_prereqs_w2.compute_subnet_ids
-  rds_subnet_ids                       = module.tfe_prereqs_w2.db_subnet_ids
-  redis_subnet_ids                     = module.tfe_prereqs_w2.redis_subnet_ids
-  cidr_allow_ingress_tfe_443           = concat([local.vpc_cidr], local.juniper_junction, local.gh_v4_hook_ranges)
+  vpc_id           = module.tfe_prereqs_w2.vpc_id
+  eks_subnet_ids   = module.tfe_prereqs_w2.compute_subnet_ids
+  rds_subnet_ids   = module.tfe_prereqs_w2.db_subnet_ids
+  redis_subnet_ids = module.tfe_prereqs_w2.redis_subnet_ids
+  cidr_allow_ingress_tfe_443 = concat([local.vpc_cidr, "${module.tfe_prereqs_w2.bastion_public_ip}/32"],
+    local.juniper_junction,
+    local.gh_v4_hook_ranges,
+    local.ngw_cidrs
+  )
   cidr_allow_ingress_tfe_metrics_http  = local.juniper_junction
   cidr_allow_ingress_tfe_metrics_https = local.juniper_junction
 
