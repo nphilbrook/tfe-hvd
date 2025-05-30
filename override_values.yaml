@@ -45,7 +45,8 @@ env:
  variables:
   # TFE configuration settings
   TFE_HOSTNAME: tfe.nick-philbrook.sbx.hashidemos.io
- 
+  TFE_ADMIN_HTTPS_PORT: 9443
+
   # Database settings
   TFE_DATABASE_HOST: primary-tfe-rds-cluster-us-west-2.cluster-c1qkweyyw7o2.us-west-2.rds.amazonaws.com:5432
   TFE_DATABASE_NAME: tfe
