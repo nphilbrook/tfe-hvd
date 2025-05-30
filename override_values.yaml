@@ -7,7 +7,7 @@ tls:
 image:
  repository: images.releases.hashicorp.com
  name: hashicorp/terraform-enterprise
- tag: v202504-1 # refer to https://developer.hashicorp.com/terraform/enterprise/releases
+ tag: v202505-1 # refer to https://developer.hashicorp.com/terraform/enterprise/releases
 
 serviceAccount:
  enabled: true
