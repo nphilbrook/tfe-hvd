@@ -1,4 +1,4 @@
-replicaCount: 3
+replicaCount: 2
 tls:
  certificateSecret: tfe-certs
  # caCertData: |
@@ -65,4 +65,3 @@ env:
   TFE_REDIS_HOST: master.primary-tfe-redis-cluster.tnjl3b.usw2.cache.amazonaws.com
   TFE_REDIS_USE_AUTH: true
   TFE_REDIS_USE_TLS: true
- 
