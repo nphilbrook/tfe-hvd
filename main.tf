@@ -80,6 +80,7 @@ module "tfe" {
   create_eks_cluster                 = true
   eks_cluster_endpoint_public_access = false
   eks_cluster_public_access_cidrs    = null
+  eks_nodegroup_instance_type        = "m7i.large"
   eks_nodegroup_scaling_config = {
     "desired_size" : 1,
     "max_size" : 2,
