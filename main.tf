@@ -62,7 +62,7 @@ module "tfe" {
   vpc_id           = module.tfe_prereqs_w2.vpc_id
   eks_subnet_ids   = module.tfe_prereqs_w2.compute_subnet_ids
   rds_subnet_ids   = module.tfe_prereqs_w2.db_subnet_ids
-  redis_subnet_ids = module.tfe_prereqs_w2.redis_subnet_ids
+  redis_subnet_ids = slice(module.tfe_prereqs_w2.redis_subnet_ids, 0, 2)
   cidr_allow_ingress_tfe_443 = concat([local.vpc_cidr, "${module.tfe_prereqs_w2.bastion_public_ip}/32"],
     local.juniper_junction,
     local.gh_v4_hook_ranges,
