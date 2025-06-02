@@ -80,13 +80,21 @@ module "tfe" {
   create_eks_cluster                 = true
   eks_cluster_endpoint_public_access = false
   eks_cluster_public_access_cidrs    = null
+  eks_nodegroup_scaling_config = {
+    "desired_size" : 1,
+    "max_size" : 2,
+    "min_size" : 1
+  }
 
   # --- Database --- #
   tfe_database_password_secret_arn = module.tfe_prereqs_w2.tfe_database_password_secret_arn
   rds_skip_final_snapshot          = false
+  rds_aurora_replica_count         = 0
+  rds_aurora_instance_class        = "db.t4g.medium"
 
   # --- Redis --- #
   tfe_redis_password_secret_arn = module.tfe_prereqs_w2.tfe_redis_password_secret_arn
+  redis_node_type               = "cache.t4g.medium"
 }
 
 # module "tfe_pi" {
