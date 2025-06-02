@@ -91,7 +91,7 @@ module "tfe" {
   tfe_database_password_secret_arn = module.tfe_prereqs_w2.tfe_database_password_secret_arn
   rds_skip_final_snapshot          = false
   rds_aurora_replica_count         = 0
-  rds_aurora_instance_class        = "db.r7i.large"
+  rds_aurora_instance_class        = "db.r6i.large"
 
   # --- Redis --- #
   tfe_redis_password_secret_arn = module.tfe_prereqs_w2.tfe_redis_password_secret_arn
