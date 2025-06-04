@@ -1,8 +1,6 @@
 replicaCount: 2
 tls:
  certificateSecret: tfe-certs
- # caCertData: |
- # <base64-encoded TFE CA bundle>
 
 image:
  repository: images.releases.hashicorp.com

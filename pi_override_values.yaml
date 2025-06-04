@@ -1,0 +1,58 @@
+replicaCount: 1
+tls:
+  certificateSecret: tfe-certs
+
+image:
+ repository: images.releases.hashicorp.com
+ name: hashicorp/terraform-enterprise
+ tag: v202505-1
+
+serviceAccount:
+  enabled: true
+  name: tfe
+
+tfe:
+  privateHttpPort: 8080
+  privateHttpsPort: 8443
+  metrics:
+    enable: true
+    httpPort: 9090
+    httpsPort: 9091
+
+service:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb-ip"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "tcp"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing" # for an external LB, set to "internet-facing"
+    service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-02902cb526ba2d584,subnet-0fdf229d289a7fcac,subnet-0454b848cac3c118a"
+    service.beta.kubernetes.io/aws-load-balancer-security-groups: sg-03705f80bf1e3c31c
+  type: LoadBalancer
+  port: 443
+
+env:
+  secretRefs:
+    - name: tfe-secrets
+  
+  variables:
+    # TFE configuration settings
+    TFE_HOSTNAME: tfe-pi.nick-philbrook.sbx.hashidemos.io
+
+    # Database settings
+    TFE_DATABASE_HOST: pi-tfe-rds-cluster-us-west-2.cluster-c1qkweyyw7o2.us-west-2.rds.amazonaws.com:5432
+    TFE_DATABASE_NAME: tfe
+    TFE_DATABASE_USER: tfe
+    TFE_DATABASE_PARAMETERS: sslmode=require
+
+    # Object storage settings
+    TFE_OBJECT_STORAGE_TYPE: s3
+    TFE_OBJECT_STORAGE_S3_BUCKET: pi-tfe-app-us-west-2-590184029125
+    TFE_OBJECT_STORAGE_S3_REGION: us-west-2
+    TFE_OBJECT_STORAGE_S3_USE_INSTANCE_PROFILE: true
+    TFE_OBJECT_STORAGE_S3_SERVER_SIDE_ENCRYPTION: AES256
+    TFE_OBJECT_STORAGE_S3_SERVER_SIDE_ENCRYPTION_KMS_KEY_ID: 
+
+    # Redis settings
+    TFE_REDIS_HOST: master.pi-tfe-redis-cluster.tnjl3b.usw2.cache.amazonaws.com
+    TFE_REDIS_USE_AUTH: true
+    TFE_REDIS_USE_TLS: true
+    
