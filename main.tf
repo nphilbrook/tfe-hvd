@@ -29,6 +29,7 @@ module "tfe_prereqs_w2" {
   # --- TLS certificates --- #
   create_tls_certs                  = true
   tls_cert_fqdn                     = local.tfe_fqdn
+  tls_cert_sans                     = [local.tfe_pi_fqdn]
   tls_cert_email_address            = "nick.philbrook@hashicorp.com"
   tls_cert_route53_public_zone_name = local.r53_zone
   create_local_cert_files           = false
