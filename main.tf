@@ -126,7 +126,7 @@ module "tfe_pi" {
   # --- IAM --- #
   create_eks_oidc_provider      = false
   create_aws_lb_controller_irsa = false
-  create_tfe_eks_pod_identity   = false
+  create_tfe_eks_pod_identity   = true
 
   # --- EKS --- #
   create_eks_cluster                 = true
