@@ -36,8 +36,5 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-# NO
-.terraform.lock.hcl
-
 # By convention
 state.json
