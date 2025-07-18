@@ -15,4 +15,19 @@ locals {
   gh_v4_hook_ranges = [for ip in jsondecode(data.terracurl_request.gh_meta.response).hooks : ip if !strcontains(ip, ":")]
 }
 
+#------------------------------------------------------------------------------
+# AWS environment
+#------------------------------------------------------------------------------
+data "aws_caller_identity" "current" {}
+
+data "aws_iam_session_context" "current" {
+  arn = data.aws_caller_identity.current.arn
+}
+
+data "aws_region" "current" {}
+
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
 data "aws_partition" "current" {}
