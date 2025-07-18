@@ -50,7 +50,7 @@ module "tfe_prereqs_w2" {
 module "tfe" {
   # source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
   # version = "0.1.1"
-  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=main"
+  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_pod_identity"
   # --- Common --- #
   friendly_name_prefix = local.friendly_name_prefix
   common_tags          = local.common_tags

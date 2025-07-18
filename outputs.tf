@@ -6,7 +6,3 @@ output "bastion_public_dns" {
 output "gh_v4_hook_ranges" {
   value = local.gh_v4_hook_ranges
 }
-
-output "helm_overrides" {
-  value = module.tfe.tfe_helm_overrides_content
-}
