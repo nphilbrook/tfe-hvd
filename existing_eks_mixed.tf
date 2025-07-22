@@ -175,7 +175,7 @@ resource "aws_iam_role_policy_attachment" "tfe_eks_nodegroup_container_registry_
 # EKS node group
 #------------------------------------------------------------------------------
 resource "aws_eks_node_group" "tfe_mixed" {
-  cluster_name    = aws_eks_cluster.existing_mixed
+  cluster_name    = aws_eks_cluster.existing_mixed.name
   node_group_name = "existing-nodegroup-mixed"
   node_role_arn   = aws_iam_role.tfe_eks_nodegroup_mixed.arn
   subnet_ids      = module.tfe_prereqs_w2.compute_subnet_ids
@@ -349,7 +349,7 @@ resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_10250_from_cluster_m
   source_security_group_id = aws_security_group.eks_cluster_allow_mixed.id
   description              = "Allow TCP/10250 (kubelet) inbound to node group from EKS cluster (cluster API)."
 
-  security_group_id = aws_security_group.tfe_eks_nodegroup_allow_mixed
+  security_group_id = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
 }
 
 resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_4443_from_cluster_mixed" {
