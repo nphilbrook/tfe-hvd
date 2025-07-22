@@ -19,17 +19,24 @@ module "tfe_prereqs_w2" {
   ngw_subnet_cidrs        = ["10.8.11.0/26", "10.8.11.64/26", "10.8.11.128/26"]
 
   # --- Bastion --- #
-  create_bastion                     = true
-  bastion_instance_type              = "t3a.small"
-  bastion_ec2_keypair_name           = "acme-w2"
-  bastion_cidr_allow_ingress_ssh     = local.juniper_junction
-  bastion_additional_security_groups = [module.tfe.eks_cluster_security_group_id, module.tfe_pi.eks_cluster_security_group_id]
-  bastion_iam_instance_profile       = aws_iam_instance_profile.bastion_profile.name
+  create_bastion                 = true
+  bastion_instance_type          = "t3a.small"
+  bastion_ec2_keypair_name       = "acme-w2"
+  bastion_cidr_allow_ingress_ssh = local.juniper_junction
+  bastion_additional_security_groups = [
+    module.tfe.eks_cluster_security_group_id, module.tfe_pi.eks_cluster_security_group_id,
+    module.tfe_pi_new.eks_cluster_security_group_id, module.tfe_irsa_new.eks_cluster_security_group_id,
+    module.tfe_pi_byo.eks_cluster_security_group_id
+  ]
+  bastion_iam_instance_profile = aws_iam_instance_profile.bastion_profile.name
 
   # --- TLS certificates --- #
-  create_tls_certs                  = true
-  tls_cert_fqdn                     = local.tfe_fqdn
-  tls_cert_sans                     = [local.tfe_pi_fqdn]
+  create_tls_certs = true
+  tls_cert_fqdn    = local.tfe_fqdn
+  tls_cert_sans = [
+    local.tfe_pi_fqdn, local.tfe_pi_new_fqdn, local.tfe_irsa_new_fqdn,
+    local.tfe_pi_byo_fqdn, local.tfe_mixed, local.tfe_pi_byo_mixed
+  ]
   tls_cert_email_address            = "nick.philbrook@hashicorp.com"
   tls_cert_route53_public_zone_name = local.r53_zone
   create_local_cert_files           = false
