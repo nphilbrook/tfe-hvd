@@ -251,7 +251,7 @@ resource "aws_launch_template" "tfe_eks_nodegroup_mixed" {
   tag_specifications {
     resource_type = "instance"
     tags = {
-      Name = "existing-eks-private-node"
+      Name = "existing-eks-private-node-mixed"
     }
   }
 }
@@ -338,7 +338,7 @@ resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_443_from_cluster_mix
   source_security_group_id = aws_security_group.eks_cluster_allow_mixed.id
   description              = "Allow TCP/443 (Cluster API) inbound to node group from EKS cluster (cluster API)."
 
-  security_group_id = aws_security_group.tfe_eks_nodegroup_allow.id
+  security_group_id = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
 }
 
 resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_10250_from_cluster_mixed" {
@@ -360,7 +360,7 @@ resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_4443_from_cluster_mi
   source_security_group_id = aws_security_group.eks_cluster_allow_mixed.id
   description              = "Allow TCP/4443 (webhooks) inbound to node group from EKS cluster (cluster API)."
 
-  security_group_id = aws_security_group.tfe_eks_nodegroup_allow.id
+  security_group_id = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
 }
 
 resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_9443_from_cluster_mixed" {
@@ -371,7 +371,7 @@ resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_9443_from_cluster_mi
   source_security_group_id = aws_security_group.eks_cluster_allow_mixed.id
   description              = "Allow TCP/9443 (ALB controller, NGINX) inbound to node group from EKS cluster (cluster API)."
 
-  security_group_id = aws_security_group.tfe_eks_nodegroup_allow.id
+  security_group_id = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
 }
 
 resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_6443_from_cluster_mixed" {
