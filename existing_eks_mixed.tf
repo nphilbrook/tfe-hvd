@@ -7,7 +7,7 @@
 resource "aws_eks_cluster" "existing_mixed" {
 
   name     = "existing-cluster-mixed"
-  role_arn = aws_iam_role.eks_cluster.arn
+  role_arn = aws_iam_role.eks_cluster_mixed.arn
 
   access_config {
     authentication_mode                         = "API_AND_CONFIG_MAP"
@@ -15,7 +15,7 @@ resource "aws_eks_cluster" "existing_mixed" {
   }
 
   vpc_config {
-    security_group_ids      = [aws_security_group.eks_cluster_allow.id]
+    security_group_ids      = [aws_security_group.eks_cluster_allow_mixed.id]
     subnet_ids              = module.tfe_prereqs_w2.compute_subnet_ids
     endpoint_private_access = true
     endpoint_public_access  = false
