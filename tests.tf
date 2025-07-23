@@ -227,11 +227,11 @@ module "tfe_mixed_new" {
   cidr_allow_ingress_tfe_metrics_https = local.juniper_junction
 
   # --- IAM --- #
-  create_eks_oidc_provider      = true
-  create_aws_lb_controller_irsa = true
-  create_tfe_eks_irsa           = true
-  # create_aws_lb_controller_pod_identity = true
-  # create_tfe_eks_pod_identity           = false
+  create_eks_oidc_provider              = true
+  create_aws_lb_controller_irsa         = false
+  create_tfe_eks_irsa                   = true
+  create_aws_lb_controller_pod_identity = true
+  create_tfe_eks_pod_identity           = false
 
   # --- EKS --- #
   create_eks_cluster                 = true
