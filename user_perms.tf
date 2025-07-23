@@ -79,7 +79,7 @@ resource "aws_eks_access_policy_association" "tfe_irsa_new_cluster_human" {
 }
 
 resource "aws_eks_access_entry" "tfe_pi_byo_cluster_human" {
-  cluster_name  = module.tfe_pi_byo.eks_cluster_name
+  cluster_name  = "existing-cluster"
   principal_arn = local.it_me
   type          = "STANDARD"
 
@@ -92,14 +92,14 @@ resource "aws_eks_access_policy_association" "tfe_pi_byo_cluster_human" {
     namespaces = []
   }
 
-  cluster_name = module.tfe_pi_byo.eks_cluster_name
+  cluster_name = "existing-cluster"
 
   policy_arn    = "arn:${data.aws_partition.current.partition}:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
   principal_arn = local.it_me
 }
 
 resource "aws_eks_access_entry" "tfe_byo_mixed_cluster_human" {
-  cluster_name  = module.tfe_byo_mixed.eks_cluster_name
+  cluster_name  = "existing-cluster-mixed"
   principal_arn = local.it_me
   type          = "STANDARD"
 
@@ -112,7 +112,7 @@ resource "aws_eks_access_policy_association" "tfe_byo_mixed_cluster_human" {
     namespaces = []
   }
 
-  cluster_name = module.tfe_byo_mixed.eks_cluster_name
+  cluster_name = "existing-cluster-mixed"
 
   policy_arn    = "arn:${data.aws_partition.current.partition}:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
   principal_arn = local.it_me

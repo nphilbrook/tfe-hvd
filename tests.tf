@@ -126,6 +126,7 @@ module "tfe_pi_byo" {
     local.gh_v4_hook_ranges,
     local.ngw_cidrs
   )
+  sg_allow_egress_from_tfe_lb = aws_security_group.tfe_eks_nodegroup_allow.id
 
   # --- IAM --- #
   create_eks_oidc_provider              = false
@@ -143,10 +144,12 @@ module "tfe_pi_byo" {
   rds_skip_final_snapshot          = false
   rds_aurora_replica_count         = 0
   rds_aurora_instance_class        = "db.r6i.large"
+  sg_allow_ingress_to_rds          = aws_security_group.tfe_eks_nodegroup_allow.id
 
   # --- Redis --- #
   tfe_redis_password_secret_arn = module.tfe_prereqs_w2.tfe_redis_password_secret_arn
   redis_node_type               = "cache.t4g.medium"
+  sg_allow_ingress_to_redis     = aws_security_group.tfe_eks_nodegroup_allow.id
 }
 
 module "tfe_byo_mixed" {
@@ -171,6 +174,7 @@ module "tfe_byo_mixed" {
     local.gh_v4_hook_ranges,
     local.ngw_cidrs
   )
+  sg_allow_egress_from_tfe_lb = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
 
   # --- IAM --- #
   create_eks_oidc_provider              = true
@@ -189,10 +193,12 @@ module "tfe_byo_mixed" {
   rds_skip_final_snapshot          = false
   rds_aurora_replica_count         = 0
   rds_aurora_instance_class        = "db.r6i.large"
+  sg_allow_ingress_to_rds          = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
 
   # --- Redis --- #
   tfe_redis_password_secret_arn = module.tfe_prereqs_w2.tfe_redis_password_secret_arn
   redis_node_type               = "cache.t4g.medium"
+  sg_allow_ingress_to_redis     = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
 }
 
 module "tfe_mixed_new" {

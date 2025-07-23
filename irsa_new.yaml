@@ -26,7 +26,7 @@ service:
     service.beta.kubernetes.io/aws-load-balancer-type: "nlb-ip"
     service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "tcp"
     service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing" # for an external LB, set to "internet-facing"
-    service.beta.kubernetes.io/aws-load-balancer-subnets: "<list, of, lb_subnet_ids>" # TFE load balancer subnets, no brackets in annotation list
+    service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-02902cb526ba2d584,subnet-0fdf229d289a7fcac,subnet-0454b848cac3c118a"
     service.beta.kubernetes.io/aws-load-balancer-security-groups: sg-03fc22ea449d0ef28
   type: LoadBalancer
   port: 443
