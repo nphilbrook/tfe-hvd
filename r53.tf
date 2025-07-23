@@ -71,3 +71,17 @@ resource "aws_route53_record" "byo_pi" {
   ttl     = 300
   records = [data.aws_lb.byo_pi.dns_name]
 }
+
+data "aws_lb" "byo_mixed" {
+  tags = {
+    "elbv2.k8s.aws/cluster" = "existing-cluster-mixed"
+  }
+}
+
+resource "aws_route53_record" "byo_mixed" {
+  zone_id = data.aws_route53_zone.public_zone.zone_id
+  name    = local.tfe_mixed
+  type    = "CNAME"
+  ttl     = 300
+  records = [data.aws_lb.byo_mixed.dns_name]
+}

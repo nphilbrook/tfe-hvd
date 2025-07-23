@@ -173,7 +173,7 @@ resource "aws_eks_access_policy_association" "tfe_new_cluster_user_mixed" {
     namespaces = []
   }
 
-  cluster_name = aws_eks_cluster.existing_mixed.name
+  cluster_name = module.tfe_mixed_new.eks_cluster_name
 
   policy_arn    = "arn:${data.aws_partition.current.partition}:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
   principal_arn = aws_iam_role.bastion_role.arn
