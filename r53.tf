@@ -43,3 +43,17 @@ resource "aws_route53_record" "irsa_new" {
   ttl     = 300
   records = [data.aws_lb.irsa_new.dns_name]
 }
+
+data "aws_lb" "pi_new" {
+  tags = {
+    "elbv2.k8s.aws/cluster" = "pi-new-tfe-eks-cluster"
+  }
+}
+
+resource "aws_route53_record" "pi_new" {
+  zone_id = data.aws_route53_zone.public_zone.zone_id
+  name    = local.tfe_pi_new_fqdn
+  type    = "CNAME"
+  ttl     = 300
+  records = [data.aws_lb.pi_new.dns_name]
+}
