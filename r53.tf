@@ -80,7 +80,7 @@ data "aws_lb" "byo_mixed" {
 
 resource "aws_route53_record" "byo_mixed" {
   zone_id = data.aws_route53_zone.public_zone.zone_id
-  name    = local.tfe_mixed
+  name    = local.tfe_byo_mixed
   type    = "CNAME"
   ttl     = 300
   records = [data.aws_lb.byo_mixed.dns_name]

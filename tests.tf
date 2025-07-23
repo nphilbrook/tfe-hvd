@@ -161,7 +161,7 @@ module "tfe_byo_mixed" {
   common_tags          = local.common_tags
 
   # --- TFE configuration settings --- #
-  tfe_fqdn                   = local.tfe_pi_byo_mixed
+  tfe_fqdn                   = local.tfe_byo_mixed
   create_helm_overrides_file = true
 
   # --- Networking --- #
