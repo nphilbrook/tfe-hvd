@@ -265,44 +265,38 @@ resource "aws_security_group" "tfe_eks_nodegroup_allow_mixed" {
   tags   = merge({ "Name" = "existing-eks-nodegroup-allow-mixed" })
 }
 
-# resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_443_from_lb" {
-#   count = var.create_eks_cluster && length(aws_security_group.tfe_lb_allow) > 0 ? 1 : 0
+resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_443_from_lb_mixed" {
+  type                     = "ingress"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
+  source_security_group_id = module.tfe_mixed_new.tfe_lb_security_group_id
+  description              = "Allow TCP/443 (HTTPS) inbound to node group from TFE load balancer."
 
-#   type                     = "ingress"
-#   from_port                = 443
-#   to_port                  = 443
-#   protocol                 = "tcp"
-#   source_security_group_id = aws_security_group.tfe_lb_allow[0].id
-#   description              = "Allow TCP/443 (HTTPS) inbound to node group from TFE load balancer."
+  security_group_id = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
+}
 
-#   security_group_id = aws_security_group.tfe_eks_nodegroup_allow[0].id
-# }
+resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_tfe_http_from_lb_mixed" {
+  type                     = "ingress"
+  from_port                = 8080
+  to_port                  = 8080
+  protocol                 = "tcp"
+  source_security_group_id = module.tfe_mixed_new.tfe_lb_security_group_id
+  description              = "Allow TCP/8080 or specified port (TFE HTTP) inbound to node group from TFE load balancer."
 
-# resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_tfe_http_from_lb" {
-#   count = var.create_eks_cluster && length(aws_security_group.tfe_lb_allow) > 0 ? 1 : 0
+  security_group_id = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
+}
 
-#   type                     = "ingress"
-#   from_port                = var.tfe_http_port
-#   to_port                  = var.tfe_http_port
-#   protocol                 = "tcp"
-#   source_security_group_id = aws_security_group.tfe_lb_allow[0].id
-#   description              = "Allow TCP/8080 or specified port (TFE HTTP) inbound to node group from TFE load balancer."
+resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_tfe_https_from_lb_mixed" {
+  type                     = "ingress"
+  from_port                = 8443
+  to_port                  = 8443
+  protocol                 = "tcp"
+  source_security_group_id = module.tfe_mixed_new.tfe_lb_security_group_id
+  description              = "Allow TCP/8443 or specified port (TFE HTTPS) inbound to node group from TFE load balancer."
 
-#   security_group_id = aws_security_group.tfe_eks_nodegroup_allow[0].id
-# }
-
-# resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_tfe_https_from_lb" {
-#   count = var.create_eks_cluster && length(aws_security_group.tfe_lb_allow) > 0 ? 1 : 0
-
-#   type                     = "ingress"
-#   from_port                = var.tfe_https_port
-#   to_port                  = var.tfe_https_port
-#   protocol                 = "tcp"
-#   source_security_group_id = aws_security_group.tfe_lb_allow[0].id
-#   description              = "Allow TCP/8443 or specified port (TFE HTTPS) inbound to node group from TFE load balancer."
-
-#   security_group_id = aws_security_group.tfe_eks_nodegroup_allow[0].id
-# }
+  security_group_id = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
+}
 
 # resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_tfe_metrics_http_from_cidr" {
 #   count = var.cidr_allow_ingress_tfe_metrics_http != null ? 1 : 0
