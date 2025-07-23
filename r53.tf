@@ -58,16 +58,16 @@ resource "aws_route53_record" "pi_new" {
   records = [data.aws_lb.pi_new.dns_name]
 }
 
-# data "aws_lb" "byo_pi" {
-#   tags = {
-#     "elbv2.k8s.aws/cluster" = "existing-cluster"
-#   }
-# }
+data "aws_lb" "byo_pi" {
+  tags = {
+    "elbv2.k8s.aws/cluster" = "existing-cluster"
+  }
+}
 
-# resource "aws_route53_record" "byo_pi" {
-#   zone_id = data.aws_route53_zone.public_zone.zone_id
-#   name    = local.tfe_pi_byo_fqdn
-#   type    = "CNAME"
-#   ttl     = 300
-#   records = [data.aws_lb.byo_pi.dns_name]
-# }
+resource "aws_route53_record" "byo_pi" {
+  zone_id = data.aws_route53_zone.public_zone.zone_id
+  name    = local.tfe_pi_byo_fqdn
+  type    = "CNAME"
+  ttl     = 300
+  records = [data.aws_lb.byo_pi.dns_name]
+}
