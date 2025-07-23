@@ -196,9 +196,9 @@ module "tfe_byo_mixed" {
 }
 
 module "tfe_mixed_new" {
-  source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
-  version = "0.1.1"
-  #   source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_pod_identity"
+  #   source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
+  #   version = "0.1.1"
+  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_pod_identity"
   # --- Common --- #
   friendly_name_prefix = "mixed-new"
   common_tags          = local.common_tags
@@ -221,11 +221,11 @@ module "tfe_mixed_new" {
   cidr_allow_ingress_tfe_metrics_https = local.juniper_junction
 
   # --- IAM --- #
-  create_eks_oidc_provider      = true
-  create_aws_lb_controller_irsa = true
-  create_tfe_eks_irsa           = true
-  #   create_aws_lb_controller_pod_identity = true
-  #   create_tfe_eks_pod_identity           = false
+  create_eks_oidc_provider              = true
+  create_aws_lb_controller_irsa         = false
+  create_tfe_eks_irsa                   = true
+  create_aws_lb_controller_pod_identity = true
+  create_tfe_eks_pod_identity           = false
 
   # --- EKS --- #
   create_eks_cluster                 = true

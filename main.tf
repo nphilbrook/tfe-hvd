@@ -28,7 +28,7 @@ module "tfe_prereqs_w2" {
     module.tfe_pi_new.eks_cluster_security_group_id, module.tfe_irsa_new.eks_cluster_security_group_id,
     aws_eks_cluster.existing.vpc_config[0].cluster_security_group_id,
     aws_eks_cluster.existing_mixed.vpc_config[0].cluster_security_group_id,
-    # module.tfe_mixed_new.eks_cluster_security_group_id
+    module.tfe_mixed_new.eks_cluster_security_group_id
   ]
   bastion_iam_instance_profile = aws_iam_instance_profile.bastion_profile.name
 
