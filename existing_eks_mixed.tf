@@ -270,7 +270,7 @@ resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_443_from_lb_mixed" {
   from_port                = 443
   to_port                  = 443
   protocol                 = "tcp"
-  source_security_group_id = module.tfe_mixed_new.tfe_lb_security_group_id
+  source_security_group_id = module.tfe_byo_mixed.tfe_lb_security_group_id
   description              = "Allow TCP/443 (HTTPS) inbound to node group from TFE load balancer."
 
   security_group_id = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
@@ -281,7 +281,7 @@ resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_tfe_http_from_lb_mix
   from_port                = 8080
   to_port                  = 8080
   protocol                 = "tcp"
-  source_security_group_id = module.tfe_mixed_new.tfe_lb_security_group_id
+  source_security_group_id = module.tfe_byo_mixed.tfe_lb_security_group_id
   description              = "Allow TCP/8080 or specified port (TFE HTTP) inbound to node group from TFE load balancer."
 
   security_group_id = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
@@ -292,7 +292,7 @@ resource "aws_security_group_rule" "tfe_eks_nodegroup_allow_tfe_https_from_lb_mi
   from_port                = 8443
   to_port                  = 8443
   protocol                 = "tcp"
-  source_security_group_id = module.tfe_mixed_new.tfe_lb_security_group_id
+  source_security_group_id = module.tfe_byo_mixed.tfe_lb_security_group_id
   description              = "Allow TCP/8443 or specified port (TFE HTTPS) inbound to node group from TFE load balancer."
 
   security_group_id = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
