@@ -202,9 +202,9 @@ module "tfe_byo_mixed" {
 }
 
 module "tfe_mixed_new" {
-  source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
-  version = "0.1.1"
-  # source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_pod_identity"
+  # source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
+  # version = "0.1.1"
+  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_pod_identity"
   # --- Common --- #
   friendly_name_prefix = "mixed-new"
   common_tags          = local.common_tags
