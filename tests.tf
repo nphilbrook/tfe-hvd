@@ -8,7 +8,7 @@ module "tfe_pi_new" {
 
   # --- TFE configuration settings --- #
   tfe_fqdn                   = local.tfe_pi_new_fqdn
-  create_helm_overrides_file = true
+  create_helm_overrides_file = false
 
   # --- Networking --- #
   vpc_id           = module.tfe_prereqs_w2.vpc_id
@@ -62,7 +62,7 @@ module "tfe_irsa_new" {
 
   # --- TFE configuration settings --- #
   tfe_fqdn                   = local.tfe_irsa_new_fqdn
-  create_helm_overrides_file = true
+  create_helm_overrides_file = false
 
   # --- Networking --- #
   vpc_id           = module.tfe_prereqs_w2.vpc_id
@@ -114,7 +114,7 @@ module "tfe_pi_byo" {
 
   # --- TFE configuration settings --- #
   tfe_fqdn                   = local.tfe_pi_byo_fqdn
-  create_helm_overrides_file = true
+  create_helm_overrides_file = false
 
   # --- Networking --- #
   vpc_id           = module.tfe_prereqs_w2.vpc_id
@@ -162,7 +162,7 @@ module "tfe_byo_mixed" {
 
   # --- TFE configuration settings --- #
   tfe_fqdn                   = local.tfe_byo_mixed
-  create_helm_overrides_file = true
+  create_helm_overrides_file = false
 
   # --- Networking --- #
   vpc_id           = module.tfe_prereqs_w2.vpc_id
@@ -211,7 +211,7 @@ module "tfe_mixed_new" {
 
   # --- TFE configuration settings --- #
   tfe_fqdn                   = local.tfe_mixed
-  create_helm_overrides_file = true
+  create_helm_overrides_file = false
 
   # --- Networking --- #
   vpc_id           = module.tfe_prereqs_w2.vpc_id

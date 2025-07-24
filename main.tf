@@ -25,7 +25,7 @@ module "tfe_prereqs_w2" {
   bastion_cidr_allow_ingress_ssh = local.juniper_junction
   bastion_additional_security_groups = [
     module.tfe.eks_cluster_security_group_id,
-    # module.tfe_pi.eks_cluster_security_group_id,
+    module.tfe_pi.eks_cluster_security_group_id,
     module.tfe_pi_new.eks_cluster_security_group_id, module.tfe_irsa_new.eks_cluster_security_group_id,
     aws_eks_cluster.existing.vpc_config[0].cluster_security_group_id,
     aws_eks_cluster.existing_mixed.vpc_config[0].cluster_security_group_id,
