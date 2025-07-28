@@ -38,3 +38,6 @@ terraform.rc
 
 # By convention
 state.json
+
+# Ignore generated certs
+*.pem
