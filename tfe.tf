@@ -2,7 +2,7 @@
 module "tfe_new" {
   # source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
   # version = "0.1.1"
-  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_pod_identity"
+  source = "git@github.com:hashicorp/terraform-aws-terraform-enterprise-eks-hvd?ref=main"
   # --- Common --- #
   friendly_name_prefix = local.new_friendly_name_prefix
   common_tags          = local.common_tags

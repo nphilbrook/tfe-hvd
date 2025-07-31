@@ -1,7 +1,8 @@
 module "tfe_pi_new" {
   # source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
   # version = "0.1.1"
-  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_pod_identity"
+  count  = 0
+  source = "git@github.com:hashicorp/terraform-aws-terraform-enterprise-eks-hvd?ref=main"
   # --- Common --- #
   friendly_name_prefix = "pi-new"
   common_tags          = local.common_tags
@@ -55,7 +56,8 @@ module "tfe_pi_new" {
 module "tfe_irsa_new" {
   # source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
   # version = "0.1.1"
-  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_pod_identity"
+  count  = 0
+  source = "git@github.com:hashicorp/terraform-aws-terraform-enterprise-eks-hvd?ref=main"
   # --- Common --- #
   friendly_name_prefix = "irsa-new"
   common_tags          = local.common_tags
@@ -107,7 +109,8 @@ module "tfe_irsa_new" {
 module "tfe_pi_byo" {
   # source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
   # version = "0.1.1"
-  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_pod_identity"
+  count  = 0
+  source = "git@github.com:hashicorp/terraform-aws-terraform-enterprise-eks-hvd?ref=main"
   # --- Common --- #
   friendly_name_prefix = "pi-byo"
   common_tags          = local.common_tags
@@ -126,7 +129,7 @@ module "tfe_pi_byo" {
     local.gh_v4_hook_ranges,
     local.ngw_cidrs
   )
-  sg_allow_egress_from_tfe_lb = aws_security_group.tfe_eks_nodegroup_allow.id
+  # sg_allow_egress_from_tfe_lb = aws_security_group.tfe_eks_nodegroup_allow.id
 
   # --- IAM --- #
   create_eks_oidc_provider              = false
@@ -144,18 +147,19 @@ module "tfe_pi_byo" {
   rds_skip_final_snapshot          = false
   rds_aurora_replica_count         = 0
   rds_aurora_instance_class        = "db.r6i.large"
-  sg_allow_ingress_to_rds          = aws_security_group.tfe_eks_nodegroup_allow.id
+  # sg_allow_ingress_to_rds          = aws_security_group.tfe_eks_nodegroup_allow.id
 
   # --- Redis --- #
   tfe_redis_password_secret_arn = module.tfe_prereqs_w2.tfe_redis_password_secret_arn
   redis_node_type               = "cache.t4g.medium"
-  sg_allow_ingress_to_redis     = aws_security_group.tfe_eks_nodegroup_allow.id
+  # sg_allow_ingress_to_redis     = aws_security_group.tfe_eks_nodegroup_allow.id
 }
 
 module "tfe_byo_mixed" {
   # source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
   # version = "0.1.1"
-  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_pod_identity"
+  count  = 0
+  source = "git@github.com:hashicorp/terraform-aws-terraform-enterprise-eks-hvd?ref=main"
   # --- Common --- #
   friendly_name_prefix = "byo-mixed"
   common_tags          = local.common_tags
@@ -174,12 +178,12 @@ module "tfe_byo_mixed" {
     local.gh_v4_hook_ranges,
     local.ngw_cidrs
   )
-  sg_allow_egress_from_tfe_lb = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
+  # sg_allow_egress_from_tfe_lb = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
 
   # --- IAM --- #
-  create_eks_oidc_provider              = true
-  eks_oidc_provider_url                 = aws_eks_cluster.existing_mixed.identity[0].oidc[0].issuer
-  create_aws_lb_controller_irsa         = true
+  create_eks_oidc_provider = false
+  # eks_oidc_provider_url                 = aws_eks_cluster.existing_mixed.identity[0].oidc[0].issuer
+  create_aws_lb_controller_irsa         = false
   create_tfe_eks_irsa                   = false
   create_aws_lb_controller_pod_identity = false
   create_tfe_eks_pod_identity           = true
@@ -193,18 +197,19 @@ module "tfe_byo_mixed" {
   rds_skip_final_snapshot          = false
   rds_aurora_replica_count         = 0
   rds_aurora_instance_class        = "db.r6i.large"
-  sg_allow_ingress_to_rds          = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
+  # sg_allow_ingress_to_rds          = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
 
   # --- Redis --- #
   tfe_redis_password_secret_arn = module.tfe_prereqs_w2.tfe_redis_password_secret_arn
   redis_node_type               = "cache.t4g.medium"
-  sg_allow_ingress_to_redis     = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
+  #   sg_allow_ingress_to_redis     = aws_security_group.tfe_eks_nodegroup_allow_mixed.id
 }
 
 module "tfe_mixed_new" {
   # source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
   # version = "0.1.1"
-  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_pod_identity"
+  count  = 0
+  source = "git@github.com:hashicorp/terraform-aws-terraform-enterprise-eks-hvd?ref=main"
   # --- Common --- #
   friendly_name_prefix = "mixed-new"
   common_tags          = local.common_tags

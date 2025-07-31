@@ -23,12 +23,12 @@ module "tfe_prereqs_w2" {
   bastion_ec2_keypair_name       = "acme-w2"
   bastion_cidr_allow_ingress_ssh = local.juniper_junction
   bastion_additional_security_groups = [
-    module.tfe.eks_cluster_security_group_id,
-    module.tfe_pi.eks_cluster_security_group_id,
-    module.tfe_pi_new.eks_cluster_security_group_id, module.tfe_irsa_new.eks_cluster_security_group_id,
-    aws_eks_cluster.existing.vpc_config[0].cluster_security_group_id,
-    aws_eks_cluster.existing_mixed.vpc_config[0].cluster_security_group_id,
-    module.tfe_mixed_new.eks_cluster_security_group_id
+    # module.tfe.eks_cluster_security_group_id,
+    # module.tfe_pi.eks_cluster_security_group_id,
+    # module.tfe_pi_new.eks_cluster_security_group_id, module.tfe_irsa_new.eks_cluster_security_group_id,
+    # aws_eks_cluster.existing.vpc_config[0].cluster_security_group_id,
+    # aws_eks_cluster.existing_mixed.vpc_config[0].cluster_security_group_id,
+    # module.tfe_mixed_new.eks_cluster_security_group_id
   ]
   bastion_iam_instance_profile = aws_iam_instance_profile.bastion_profile.name
 
@@ -59,7 +59,8 @@ module "tfe_prereqs_w2" {
 module "tfe" {
   # source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
   # version = "0.1.1"
-  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_pod_identity"
+  count  = 0
+  source = "git@github.com:hashicorp/terraform-aws-terraform-enterprise-eks-hvd?ref=main"
   # --- Common --- #
   friendly_name_prefix = local.friendly_name_prefix
   common_tags          = local.common_tags
@@ -111,7 +112,8 @@ module "tfe" {
 module "tfe_pi" {
   # source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
   # version = "0.1.1"
-  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_pod_identity"
+  count  = 0
+  source = "git@github.com:hashicorp/terraform-aws-terraform-enterprise-eks-hvd?ref=main"
   # --- Common --- #
   friendly_name_prefix = "pi"
   common_tags          = local.common_tags
