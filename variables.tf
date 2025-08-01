@@ -22,3 +22,8 @@ variable "tfe_license_secret_value" {
   type      = string
   sensitive = true
 }
+
+variable "juniper_junction" {
+  type    = list(string)
+  default = []
+}

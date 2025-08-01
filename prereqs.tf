@@ -24,7 +24,7 @@ module "prereqs" {
   private_subnet_cidrs           = ["10.9.8.0/21", "10.9.16.0/21", "10.9.24.0/21"]
   create_bastion                 = true
   bastion_ec2_keypair_name       = "acme-w2"
-  bastion_cidr_allow_ingress_ssh = local.juniper_junction
+  bastion_cidr_allow_ingress_ssh = var.juniper_junction
 
   # --- Secrets Manager Prereq Secrets --- #
   tfe_license_secret_value             = var.tfe_license_secret_value

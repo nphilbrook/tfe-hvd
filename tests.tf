@@ -17,12 +17,12 @@ module "tfe_pi_new" {
   rds_subnet_ids   = module.tfe_prereqs_w2.db_subnet_ids
   redis_subnet_ids = slice(module.tfe_prereqs_w2.redis_subnet_ids, 0, 2)
   cidr_allow_ingress_tfe_443 = concat([local.vpc_cidr, "${module.tfe_prereqs_w2.bastion_public_ip}/32"],
-    local.juniper_junction,
+    var.juniper_junction,
     local.gh_v4_hook_ranges,
     local.ngw_cidrs
   )
-  cidr_allow_ingress_tfe_metrics_http  = local.juniper_junction
-  cidr_allow_ingress_tfe_metrics_https = local.juniper_junction
+  cidr_allow_ingress_tfe_metrics_http  = var.juniper_junction
+  cidr_allow_ingress_tfe_metrics_https = var.juniper_junction
 
   # --- IAM --- #
   create_eks_oidc_provider              = false
@@ -72,12 +72,12 @@ module "tfe_irsa_new" {
   rds_subnet_ids   = module.tfe_prereqs_w2.db_subnet_ids
   redis_subnet_ids = slice(module.tfe_prereqs_w2.redis_subnet_ids, 0, 2)
   cidr_allow_ingress_tfe_443 = concat([local.vpc_cidr, "${module.tfe_prereqs_w2.bastion_public_ip}/32"],
-    local.juniper_junction,
+    var.juniper_junction,
     local.gh_v4_hook_ranges,
     local.ngw_cidrs
   )
-  cidr_allow_ingress_tfe_metrics_http  = local.juniper_junction
-  cidr_allow_ingress_tfe_metrics_https = local.juniper_junction
+  cidr_allow_ingress_tfe_metrics_http  = var.juniper_junction
+  cidr_allow_ingress_tfe_metrics_https = var.juniper_junction
 
   # --- IAM --- #
   create_eks_oidc_provider      = true
@@ -125,7 +125,7 @@ module "tfe_pi_byo" {
   rds_subnet_ids   = module.tfe_prereqs_w2.db_subnet_ids
   redis_subnet_ids = slice(module.tfe_prereqs_w2.redis_subnet_ids, 0, 2)
   cidr_allow_ingress_tfe_443 = concat([local.vpc_cidr, "${module.tfe_prereqs_w2.bastion_public_ip}/32"],
-    local.juniper_junction,
+    var.juniper_junction,
     local.gh_v4_hook_ranges,
     local.ngw_cidrs
   )
@@ -174,7 +174,7 @@ module "tfe_byo_mixed" {
   rds_subnet_ids   = module.tfe_prereqs_w2.db_subnet_ids
   redis_subnet_ids = slice(module.tfe_prereqs_w2.redis_subnet_ids, 0, 2)
   cidr_allow_ingress_tfe_443 = concat([local.vpc_cidr, "${module.tfe_prereqs_w2.bastion_public_ip}/32"],
-    local.juniper_junction,
+    var.juniper_junction,
     local.gh_v4_hook_ranges,
     local.ngw_cidrs
   )
@@ -224,12 +224,12 @@ module "tfe_mixed_new" {
   rds_subnet_ids   = module.tfe_prereqs_w2.db_subnet_ids
   redis_subnet_ids = slice(module.tfe_prereqs_w2.redis_subnet_ids, 0, 2)
   cidr_allow_ingress_tfe_443 = concat([local.vpc_cidr, "${module.tfe_prereqs_w2.bastion_public_ip}/32"],
-    local.juniper_junction,
+    var.juniper_junction,
     local.gh_v4_hook_ranges,
     local.ngw_cidrs
   )
-  cidr_allow_ingress_tfe_metrics_http  = local.juniper_junction
-  cidr_allow_ingress_tfe_metrics_https = local.juniper_junction
+  cidr_allow_ingress_tfe_metrics_http  = var.juniper_junction
+  cidr_allow_ingress_tfe_metrics_https = var.juniper_junction
 
   # --- IAM --- #
   create_eks_oidc_provider              = true

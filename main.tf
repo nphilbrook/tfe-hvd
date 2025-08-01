@@ -21,7 +21,7 @@ module "tfe_prereqs_w2" {
   create_bastion                 = true
   bastion_instance_type          = "t3a.small"
   bastion_ec2_keypair_name       = "acme-w2"
-  bastion_cidr_allow_ingress_ssh = local.juniper_junction
+  bastion_cidr_allow_ingress_ssh = var.juniper_junction
   bastion_additional_security_groups = [
     # module.tfe.eks_cluster_security_group_id,
     # module.tfe_pi.eks_cluster_security_group_id,
@@ -75,12 +75,12 @@ module "tfe" {
   rds_subnet_ids   = module.tfe_prereqs_w2.db_subnet_ids
   redis_subnet_ids = slice(module.tfe_prereqs_w2.redis_subnet_ids, 0, 2)
   cidr_allow_ingress_tfe_443 = concat([local.vpc_cidr, "${module.tfe_prereqs_w2.bastion_public_ip}/32"],
-    local.juniper_junction,
+    var.juniper_junction,
     local.gh_v4_hook_ranges,
     local.ngw_cidrs
   )
-  cidr_allow_ingress_tfe_metrics_http  = local.juniper_junction
-  cidr_allow_ingress_tfe_metrics_https = local.juniper_junction
+  cidr_allow_ingress_tfe_metrics_http  = var.juniper_junction
+  cidr_allow_ingress_tfe_metrics_https = var.juniper_junction
 
   # --- IAM --- #
   create_eks_oidc_provider      = true
@@ -128,12 +128,12 @@ module "tfe_pi" {
   rds_subnet_ids   = module.tfe_prereqs_w2.db_subnet_ids
   redis_subnet_ids = slice(module.tfe_prereqs_w2.redis_subnet_ids, 0, 2)
   cidr_allow_ingress_tfe_443 = concat([local.vpc_cidr, "${module.tfe_prereqs_w2.bastion_public_ip}/32"],
-    local.juniper_junction,
+    var.juniper_junction,
     local.gh_v4_hook_ranges,
     local.ngw_cidrs
   )
-  cidr_allow_ingress_tfe_metrics_http  = local.juniper_junction
-  cidr_allow_ingress_tfe_metrics_https = local.juniper_junction
+  cidr_allow_ingress_tfe_metrics_http  = var.juniper_junction
+  cidr_allow_ingress_tfe_metrics_https = var.juniper_junction
 
   # --- IAM --- #
   create_eks_oidc_provider              = false

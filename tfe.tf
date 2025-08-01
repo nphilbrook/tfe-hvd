@@ -17,13 +17,13 @@ module "tfe_new" {
   rds_subnet_ids   = module.prereqs.private_subnet_ids
   redis_subnet_ids = slice(module.prereqs.private_subnet_ids, 0, 2)
   cidr_allow_ingress_tfe_443 = concat([local.new_vpc_cidr, "${module.prereqs.bastion_public_ip}/32"],
-    local.juniper_junction,
+    var.juniper_junction,
     local.gh_v4_hook_ranges,
     #   new prereqs module does not output ngw_public_ips
     #     local.ngw_cidrs
   )
-  cidr_allow_ingress_tfe_metrics_http  = local.juniper_junction
-  cidr_allow_ingress_tfe_metrics_https = local.juniper_junction
+  cidr_allow_ingress_tfe_metrics_http  = var.juniper_junction
+  cidr_allow_ingress_tfe_metrics_https = var.juniper_junction
 
   # --- IAM --- #
   create_eks_oidc_provider              = false
