@@ -39,25 +39,25 @@ resource "aws_iam_instance_profile" "bastion_profile" {
   role = aws_iam_role.bastion_role.name
 }
 
-# resource "aws_eks_access_entry" "tfe_cluster_user" {
-#   cluster_name  = module.tfe.eks_cluster_name
-#   principal_arn = aws_iam_role.bastion_role.arn
-#   type          = "STANDARD"
+resource "aws_eks_access_entry" "tfe_cluster_user" {
+  cluster_name  = module.tfe_new.eks_cluster_name
+  principal_arn = aws_iam_role.bastion_role.arn
+  type          = "STANDARD"
 
-#   tags = local.common_tags
-# }
+  tags = local.common_tags
+}
 
-# resource "aws_eks_access_policy_association" "tfe_cluster_user" {
-#   access_scope {
-#     type       = "cluster"
-#     namespaces = []
-#   }
+resource "aws_eks_access_policy_association" "tfe_cluster_user" {
+  access_scope {
+    type       = "cluster"
+    namespaces = []
+  }
 
-#   cluster_name = module.tfe.eks_cluster_name
+  cluster_name = module.tfe_new.eks_cluster_name
 
-#   policy_arn    = "arn:${data.aws_partition.current.partition}:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
-#   principal_arn = aws_iam_role.bastion_role.arn
-# }
+  policy_arn    = "arn:${data.aws_partition.current.partition}:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+  principal_arn = aws_iam_role.bastion_role.arn
+}
 
 # resource "aws_eks_access_entry" "tfe_pi_cluster_user" {
 #   cluster_name  = module.tfe_pi.eks_cluster_name
