@@ -53,3 +53,13 @@ module "tfe_new" {
   tfe_redis_password_secret_arn = module.prereqs.tfe_redis_password_secret_arn
   redis_node_type               = "cache.t4g.medium"
 }
+
+resource "aws_security_group_rule" "eks_cluster_allow_ingress_bastion" {
+  type                     = "ingress"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
+  source_security_group_id = module.prereqs.bastion_security_group_id
+  description              = "Allow TCP/443 (HTTPS) inbound to EKS cluster from bastion."
+  security_group_id        = module.tfe_new.eks_cluster_security_group_id
+}
