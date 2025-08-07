@@ -13,5 +13,9 @@ terraform {
       source  = "vancluever/acme"
       version = "~>2.23"
     }
+    local = {
+      source  = "hashicorp/local"
+      version = "~>2.5"
+    }
   }
 }

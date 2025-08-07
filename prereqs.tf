@@ -11,7 +11,7 @@ module "cert" {
 }
 
 module "prereqs" {
-  source = "git@github.com:hashicorp-services/terraform-aws-prereqs?ref=nphilbrook_qol_improvements"
+  source = "git@github.com:hashicorp-services/terraform-aws-prereqs?ref=main"
 
   # --- Common --- #
   friendly_name_prefix = local.new_friendly_name_prefix

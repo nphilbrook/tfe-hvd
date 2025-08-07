@@ -2,7 +2,8 @@
 module "tfe_new" {
   # source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
   # version = "0.1.1"
-  source = "git@github.com:hashicorp/terraform-aws-terraform-enterprise-eks-hvd?ref=main"
+  # source = "git@github.com:hashicorp/terraform-aws-terraform-enterprise-eks-hvd?ref=main"
+  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_local_version"
   # --- Common --- #
   friendly_name_prefix = local.new_friendly_name_prefix
   common_tags          = local.common_tags
@@ -20,7 +21,7 @@ module "tfe_new" {
     var.juniper_junction,
     local.gh_v4_hook_ranges,
     #   TODO: determine if this is required
-    local.ngw_cidrs
+    # local.ngw_cidrs
   )
   cidr_allow_ingress_tfe_metrics_http  = var.juniper_junction
   cidr_allow_ingress_tfe_metrics_https = var.juniper_junction
