@@ -19,8 +19,8 @@ module "tfe_new" {
   cidr_allow_ingress_tfe_443 = concat([local.new_vpc_cidr, "${module.prereqs.bastion_public_ip}/32"],
     var.juniper_junction,
     local.gh_v4_hook_ranges,
-    #   new prereqs module does not output ngw_public_ips
-    #     local.ngw_cidrs
+    #   TODO: determine if this is required
+    local.ngw_cidrs
   )
   cidr_allow_ingress_tfe_metrics_http  = var.juniper_junction
   cidr_allow_ingress_tfe_metrics_https = var.juniper_junction
