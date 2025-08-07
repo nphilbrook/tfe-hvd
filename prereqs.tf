@@ -24,7 +24,7 @@ module "prereqs" {
   private_subnet_cidrs           = ["10.9.8.0/21", "10.9.16.0/21", "10.9.24.0/21"]
   create_bastion                 = true
   bastion_ec2_keypair_name       = "acme-w2"
-  bastion_cidr_allow_ingress_ssh = concat(var.juniper_junction, ["172.20.10.0/28"])
+  bastion_cidr_allow_ingress_ssh = concat(var.juniper_junction, ["174.209.39.102/32"])
   bastion_iam_instance_profile   = aws_iam_instance_profile.bastion_profile.name
 
   # --- Secrets Manager Prereq Secrets --- #
