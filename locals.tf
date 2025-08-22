@@ -17,6 +17,8 @@ locals {
   tfe_byo_mixed = "tfe-pi-byo-mixed.nick-philbrook.sbx.hashidemos.io"
   tfe_mixed     = "tfe-mixed.nick-philbrook.sbx.hashidemos.io"
 
+  # TODO: What does this yield, is it the same thing?!
+  # data.aws_iam_session_context.current.issuer_arn
   it_me     = "arn:aws:iam::590184029125:role/aws_nick.philbrook_test-developer"
   r53_zone  = "nick-philbrook.sbx.hashidemos.io"
   vpc_cidr  = "10.8.0.0/16"
