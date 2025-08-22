@@ -1,59 +1,59 @@
-module "tfe_prereqs_w2" {
-  source = "git@github.com:nphilbrook/terraform-aws-tfe-prereqs?ref=nphilbrook_sgs_iam_profiles"
-  # source = "git@github.com:hashicorp-services/terraform-aws-tfe-prereqs?ref=7c212d0"
-  # source = "/home/nphilbrook/repos/mine/fork-terraform-aws-tfe-prereqs"
+# module "tfe_prereqs_w2" {
+#   source = "git@github.com:nphilbrook/terraform-aws-tfe-prereqs?ref=nphilbrook_sgs_iam_profiles"
+#   # source = "git@github.com:hashicorp-services/terraform-aws-tfe-prereqs?ref=7c212d0"
+#   # source = "/home/nphilbrook/repos/mine/fork-terraform-aws-tfe-prereqs"
 
-  # --- Common --- #
-  friendly_name_prefix = local.friendly_name_prefix
-  common_tags          = local.common_tags
+#   # --- Common --- #
+#   friendly_name_prefix = local.friendly_name_prefix
+#   common_tags          = local.common_tags
 
-  # --- Networking --- #
-  create_vpc              = true
-  vpc_cidr                = local.vpc_cidr
-  lb_subnet_cidrs_public  = ["10.8.0.0/24", "10.8.1.0/24", "10.8.2.0/24"]
-  lb_subnet_cidrs_private = ["10.8.3.0/24", "10.8.4.0/24", "10.8.5.0/24"]
-  compute_subnet_cidrs    = ["10.8.6.0/24", "10.8.7.0/24", "10.8.8.0/24"]
-  db_subnet_cidrs         = ["10.8.9.0/26", "10.8.9.64/26", "10.8.9.128/26"]
-  redis_subnet_cidrs      = ["10.8.10.0/26", "10.8.10.64/26", "10.8.10.128/26"]
-  ngw_subnet_cidrs        = ["10.8.11.0/26", "10.8.11.64/26", "10.8.11.128/26"]
+#   # --- Networking --- #
+#   create_vpc              = true
+#   vpc_cidr                = local.vpc_cidr
+#   lb_subnet_cidrs_public  = ["10.8.0.0/24", "10.8.1.0/24", "10.8.2.0/24"]
+#   lb_subnet_cidrs_private = ["10.8.3.0/24", "10.8.4.0/24", "10.8.5.0/24"]
+#   compute_subnet_cidrs    = ["10.8.6.0/24", "10.8.7.0/24", "10.8.8.0/24"]
+#   db_subnet_cidrs         = ["10.8.9.0/26", "10.8.9.64/26", "10.8.9.128/26"]
+#   redis_subnet_cidrs      = ["10.8.10.0/26", "10.8.10.64/26", "10.8.10.128/26"]
+#   ngw_subnet_cidrs        = ["10.8.11.0/26", "10.8.11.64/26", "10.8.11.128/26"]
 
-  # --- Bastion --- #
-  create_bastion                 = true
-  bastion_instance_type          = "t3a.small"
-  bastion_ec2_keypair_name       = "acme-w2"
-  bastion_cidr_allow_ingress_ssh = var.juniper_junction
-  bastion_additional_security_groups = [
-    # module.tfe.eks_cluster_security_group_id,
-    # module.tfe_pi.eks_cluster_security_group_id,
-    # module.tfe_pi_new.eks_cluster_security_group_id, module.tfe_irsa_new.eks_cluster_security_group_id,
-    # aws_eks_cluster.existing.vpc_config[0].cluster_security_group_id,
-    # aws_eks_cluster.existing_mixed.vpc_config[0].cluster_security_group_id,
-    # module.tfe_mixed_new.eks_cluster_security_group_id
-  ]
-  bastion_iam_instance_profile = aws_iam_instance_profile.bastion_profile.name
+#   # --- Bastion --- #
+#   create_bastion                 = true
+#   bastion_instance_type          = "t3a.small"
+#   bastion_ec2_keypair_name       = "acme-w2"
+#   bastion_cidr_allow_ingress_ssh = var.juniper_junction
+#   bastion_additional_security_groups = [
+#     # module.tfe.eks_cluster_security_group_id,
+#     # module.tfe_pi.eks_cluster_security_group_id,
+#     # module.tfe_pi_new.eks_cluster_security_group_id, module.tfe_irsa_new.eks_cluster_security_group_id,
+#     # aws_eks_cluster.existing.vpc_config[0].cluster_security_group_id,
+#     # aws_eks_cluster.existing_mixed.vpc_config[0].cluster_security_group_id,
+#     # module.tfe_mixed_new.eks_cluster_security_group_id
+#   ]
+#   bastion_iam_instance_profile = aws_iam_instance_profile.bastion_profile.name
 
-  # --- TLS certificates --- #
-  create_tls_certs = true
-  tls_cert_fqdn    = local.tfe_fqdn
-  tls_cert_sans = [
-    local.tfe_pi_fqdn, local.tfe_pi_new_fqdn, local.tfe_irsa_new_fqdn,
-    local.tfe_pi_byo_fqdn, local.tfe_mixed, local.tfe_byo_mixed
-  ]
-  tls_cert_email_address            = "nick.philbrook@hashicorp.com"
-  tls_cert_route53_public_zone_name = local.r53_zone
-  create_local_cert_files           = false
+#   # --- TLS certificates --- #
+#   create_tls_certs = true
+#   tls_cert_fqdn    = local.tfe_fqdn
+#   tls_cert_sans = [
+#     local.tfe_pi_fqdn, local.tfe_pi_new_fqdn, local.tfe_irsa_new_fqdn,
+#     local.tfe_pi_byo_fqdn, local.tfe_mixed, local.tfe_byo_mixed
+#   ]
+#   tls_cert_email_address            = "nick.philbrook@hashicorp.com"
+#   tls_cert_route53_public_zone_name = local.r53_zone
+#   create_local_cert_files           = false
 
-  # --- Secrets Manager --- #
-  tfe_database_password_secret_value   = var.tfe_database_password_secret_value
-  tfe_redis_password_secret_value      = var.tfe_redis_password_secret_value
-  tfe_encryption_password_secret_value = var.tfe_encryption_password_secret_value
-  tfe_license_secret_value             = var.tfe_license_secret_value
-  tfe_secrets_manager_replica_regions  = toset(["us-east-2"])
+#   # --- Secrets Manager --- #
+#   tfe_database_password_secret_value   = var.tfe_database_password_secret_value
+#   tfe_redis_password_secret_value      = var.tfe_redis_password_secret_value
+#   tfe_encryption_password_secret_value = var.tfe_encryption_password_secret_value
+#   tfe_license_secret_value             = var.tfe_license_secret_value
+#   tfe_secrets_manager_replica_regions  = toset(["us-east-2"])
 
-  # --- CloudWatch (optional) --- #
-  create_cloudwatch_log_group = true
-  cloudwatch_log_group_name   = "tfe-logs"
-}
+#   # --- CloudWatch (optional) --- #
+#   create_cloudwatch_log_group = true
+#   cloudwatch_log_group_name   = "tfe-logs"
+# }
 
 
 # module "tfe" {
