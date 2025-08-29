@@ -10,7 +10,7 @@ module "tfe_new" {
 
   # --- TFE configuration settings --- #
   tfe_fqdn                   = local.tfe_pi_new_fqdn
-  create_helm_overrides_file = true
+  create_helm_overrides_file = false
 
   # --- Networking --- #
   vpc_id           = module.prereqs.vpc_id
@@ -38,9 +38,9 @@ module "tfe_new" {
   eks_cluster_public_access_cidrs    = null
   eks_nodegroup_instance_type        = "m7i.large"
   eks_nodegroup_scaling_config = {
-    "desired_size" : 1,
+    "desired_size" : 2,
     "max_size" : 3,
-    "min_size" : 1
+    "min_size" : 2
   }
 
   # --- Database --- #
