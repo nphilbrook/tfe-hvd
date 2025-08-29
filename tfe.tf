@@ -9,7 +9,7 @@ module "tfe_new" {
   common_tags          = local.common_tags
 
   # --- TFE configuration settings --- #
-  tfe_fqdn                   = local.tfe_fqdn
+  tfe_fqdn                   = local.tfe_pi_new_fqdn
   create_helm_overrides_file = true
 
   # --- Networking --- #
