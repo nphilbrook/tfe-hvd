@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+    service.beta.kubernetes.io/aws-load-balancer-security-groups: sg-09aed9fe936e85155
+    service.beta.kubernetes.io/aws-load-balancer-subnets: "new-private-us-west-2a,new-private-us-west-2b,new-private-us-west-2c"
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb-ip
+  name: terraform-enterprise-internal
+  namespace: tfe
+spec:
+  type: LoadBalancer
+  ports:
+  - appProtocol: tcp
+    name: https-port
+    port: 443
+    protocol: TCP
+    targetPort: 8443
+  - appProtocol: tcp
+    name: admin-https-port
+    port: 9443
+    protocol: TCP
+    targetPort: 9443
+  selector:
+    app: terraform-enterprise

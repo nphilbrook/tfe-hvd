@@ -1,4 +1,4 @@
-replicaCount: 1
+replicaCount: 2
 tls:
   certificateSecret: tfe-certs
 
@@ -60,3 +60,38 @@ env:
     TFE_REDIS_HOST: master.new-tfe-redis-cluster.tnjl3b.usw2.cache.amazonaws.com
     TFE_REDIS_USE_AUTH: true
     TFE_REDIS_USE_TLS: true
+
+# This is to add an /etc/hosts aliases on the TFE pods
+# so that when they resolve tfe-pi-new.nick-philbrook.sbx.hashidemos.io
+# they are directed to the internal service
+extraVolumes:
+  - name: hosts-volume
+    emptyDir: {}
+initContainers:
+  - name: add-hosts
+    image: busybox:1.37
+    command:
+    - sh
+    - -c
+    - |
+      # Wait for service to exist
+      until nslookup terraform-enterprise.tfe.svc.cluster.local; do
+        echo "Waiting for service..."
+        sleep 2
+      done
+
+      # More reliable IP extraction using nslookup
+      SVC_IP=$(nslookup terraform-enterprise.tfe.svc.cluster.local | grep "Address:" | tail -1 | awk '{print $2}')
+
+      # Copy original hosts file first, then add our entry
+      cp /etc/hosts /shared/hosts
+      echo "$SVC_IP tfe-pi-new.nick-philbrook.sbx.hashidemos.io" >> /shared/hosts
+
+      echo "Added: $SVC_IP tfe-pi-new.nick-philbrook.sbx.hashidemos.io"
+    volumeMounts:
+      - name: hosts-volume
+        mountPath: /shared
+extraVolumeMounts:
+  - name: hosts-volume
+    mountPath: /etc/hosts
+    subPath: hosts
