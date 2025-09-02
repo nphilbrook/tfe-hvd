@@ -1,0 +1,30 @@
+# Everything except the final line `rewrite ...` was pulled from the existing 
+# config that shipped with CoreDNS
+apiVersion: v1
+data:
+  Corefile: |
+    .:53 {
+        errors
+        health {
+            lameduck 5s
+          }
+        ready
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
+          pods insecure
+          fallthrough in-addr.arpa ip6.arpa
+        }
+        prometheus :9153
+        forward . /etc/resolv.conf
+        cache 30
+        loop
+        reload
+        loadbalance
+        rewrite name tfe-pi-new.nick-philbrook.sbx.hashidemos.io terraform-enterprise.tfe.svc.cluster.local
+    }
+kind: ConfigMap
+metadata:
+  labels:
+    eks.amazonaws.com/component: coredns
+    k8s-app: kube-dns
+  name: coredns
+  namespace: kube-system
