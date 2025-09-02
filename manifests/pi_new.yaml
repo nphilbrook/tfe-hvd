@@ -64,6 +64,9 @@ env:
 # This is to add an /etc/hosts aliases on the TFE pods
 # so that when they resolve tfe-pi-new.nick-philbrook.sbx.hashidemos.io
 # they are directed to the internal service
+# NOTE: this may not be reliable as k8s advises against modifying /etc/hosts
+# manually https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/#adding-additional-entries-with-hostaliases
+# But it works for now :shrug:. See the other approach in service-internal.yaml and ../r53.tf
 extraVolumes:
   - name: hosts-volume
     emptyDir: {}
