@@ -39,7 +39,7 @@ module "tfe_new" {
   eks_cluster_public_access_cidrs    = null
   eks_nodegroup_instance_type        = "m7i.large"
   eks_nodegroup_scaling_config = {
-    "desired_size" : 2,
+    "desired_size" : 3,
     "max_size" : 3,
     "min_size" : 2
   }
