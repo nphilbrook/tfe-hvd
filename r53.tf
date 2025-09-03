@@ -58,3 +58,12 @@ resource "aws_route53_record" "tfe_internal" {
   ttl     = 300
   records = [data.aws_lb.internal.dns_name]
 }
+
+# Friendly CNAME for the bastion host
+resource "aws_route53_record" "bastion_friendly" {
+  zone_id = data.aws_route53_zone.public_zone.zone_id
+  name    = "bastion"
+  type    = "CNAME"
+  ttl     = 300
+  records = [module.prereqs.bastion_public_dns]
+}
