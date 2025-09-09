@@ -17,10 +17,14 @@ module "tfe_new" {
   eks_subnet_ids   = module.prereqs.private_subnet_ids
   rds_subnet_ids   = module.prereqs.private_subnet_ids
   redis_subnet_ids = slice(module.prereqs.private_subnet_ids, 0, 2)
-  cidr_allow_ingress_tfe_443 = concat([local.new_vpc_cidr, "${module.prereqs.bastion_public_ip}/32"],
+  cidr_allow_ingress_tfe_443 = concat([local.new_vpc_cidr,
+    "${module.prereqs.bastion_public_ip}/32"],
     var.juniper_junction,
     local.gh_v4_hook_ranges,
-    local.ngw_cidrs
+    local.ngw_cidrs,
+    # Yes, this sucks - problem is verification of TFE workload identity tokens from AWS. No IP address range to allow-list
+    # Leaving the more-specific ranges above for when I can hopefully remove this
+    ["0.0.0.0/0"]
   )
   cidr_allow_ingress_tfe_metrics_http  = var.juniper_junction
   cidr_allow_ingress_tfe_metrics_https = var.juniper_junction
