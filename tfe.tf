@@ -1,9 +1,9 @@
 # Net new TFE instance based on the new non-deprecated prereqs module
 module "tfe_new" {
-  # source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
-  # version = "0.1.1"
+  source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
+  version = "0.1.2"
   # source = "git@github.com:hashicorp/terraform-aws-terraform-enterprise-eks-hvd?ref=main"
-  source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_admin_port"
+  # source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_admin_port"
   # --- Common --- #
   friendly_name_prefix = local.new_friendly_name_prefix
   common_tags          = local.common_tags
@@ -28,7 +28,7 @@ module "tfe_new" {
   )
   cidr_allow_ingress_tfe_metrics_http  = var.juniper_junction
   cidr_allow_ingress_tfe_metrics_https = var.juniper_junction
-  tfe_admin_https_port                 = 9443
+  # tfe_admin_https_port                 = 9443
 
   # --- IAM --- #
   create_eks_oidc_provider              = false
