@@ -16,7 +16,7 @@ module "tfe_new" {
   vpc_id           = module.prereqs.vpc_id
   eks_subnet_ids   = module.prereqs.private_subnet_ids
   rds_subnet_ids   = module.prereqs.private_subnet_ids
-  redis_subnet_ids = slice(module.prereqs.private_subnet_ids, 0, 2)
+  redis_subnet_ids = slice(module.prereqs.private_subnet_ids, 0, 1)
   cidr_allow_ingress_tfe_443 = concat([local.new_vpc_cidr,
     "${module.prereqs.bastion_public_ip}/32"],
     var.juniper_junction,
