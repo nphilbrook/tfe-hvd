@@ -55,8 +55,10 @@ module "tfe_new" {
   rds_aurora_instance_class        = "db.r6i.large"
 
   # --- Redis --- #
-  tfe_redis_password_secret_arn = module.prereqs.tfe_redis_password_secret_arn
-  redis_node_type               = "cache.t4g.medium"
+  tfe_redis_password_secret_arn    = module.prereqs.tfe_redis_password_secret_arn
+  redis_node_type                  = "cache.t4g.medium"
+  redis_automatic_failover_enabled = false
+  redis_multi_az_enabled           = false
 }
 
 resource "aws_security_group_rule" "eks_cluster_allow_ingress_bastion" {
