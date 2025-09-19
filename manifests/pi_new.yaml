@@ -32,6 +32,7 @@ service:
     service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing" # for an external LB, set to "internet-facing"
     service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-0c6e2389834fcae3e,subnet-0af81c5cd239a00d6,subnet-08bce4e97aa5c32db"
     service.beta.kubernetes.io/aws-load-balancer-security-groups: sg-09aed9fe936e85155
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
   type: LoadBalancer
   port: 443
 

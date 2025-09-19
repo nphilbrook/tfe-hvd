@@ -8,6 +8,7 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-security-groups: sg-09aed9fe936e85155
     service.beta.kubernetes.io/aws-load-balancer-subnets: "new-private-us-west-2a,new-private-us-west-2b,new-private-us-west-2c"
     service.beta.kubernetes.io/aws-load-balancer-type: nlb-ip
+    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
   name: terraform-enterprise-internal
   namespace: tfe
 spec:
