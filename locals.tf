@@ -23,7 +23,6 @@ locals {
 
   it_me     = data.aws_iam_session_context.human.issuer_arn
   r53_zone  = "nick-philbrook.sbx.hashidemos.io"
-  vpc_cidr  = "10.8.0.0/16"
   ngw_cidrs = [for ip in module.prereqs.ngw_public_ips : "${ip}/32"]
 
   new_friendly_name_prefix = "new"
