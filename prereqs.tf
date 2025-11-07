@@ -10,6 +10,10 @@ module "cert" {
   route53_public_zone_name = local.r53_zone
 }
 
+# quick hack to get the certs and key out of state:
+# cat state.json|jq -r '.resources.[] | select(.type =="acme_certificate") | .instances[0].attributes | "\(.certificate_pem)\(.issuer_pem)"' > 2025-11-07_full_chain.pem
+# cat state.json|jq -r '.resources.[] | select(.type =="acme_certificate") | .instances[0].attributes.private_key_pem' > 2025-11-07_privkey.pem
+
 module "prereqs" {
   source = "git@github.com:hashicorp-services/terraform-aws-prereqs?ref=main"
 
