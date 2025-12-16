@@ -31,7 +31,7 @@ module "prereqs" {
   bastion_ec2_keypair_name       = "acme-w2"
   bastion_cidr_allow_ingress_ssh = concat(var.juniper_junction, ["174.209.39.102/32"])
   bastion_iam_instance_profile   = aws_iam_instance_profile.bastion_profile.name
-  save_money_on_nat_gateways     = true
+  # save_money_on_nat_gateways     = true
 
   # --- Secrets Manager Prereq Secrets --- #
   tfe_license_secret_value             = var.tfe_license_secret_value
