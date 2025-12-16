@@ -15,7 +15,8 @@ module "cert" {
 # cat state.json|jq -r '.resources.[] | select(.type =="acme_certificate") | .instances[0].attributes.private_key_pem' > 2025-11-07_privkey.pem
 
 module "prereqs" {
-  source = "git@github.com:hashicorp-services/terraform-aws-prereqs?ref=main"
+  # source = "git@github.com:hashicorp-services/terraform-aws-prereqs?ref=main"
+  source = "git@github.com:nphilbrook/terraform-aws-prereqs?ref=nphilbrook_save_money_on_NATs"
 
   # --- Common --- #
   friendly_name_prefix = local.new_friendly_name_prefix
@@ -30,6 +31,7 @@ module "prereqs" {
   bastion_ec2_keypair_name       = "acme-w2"
   bastion_cidr_allow_ingress_ssh = concat(var.juniper_junction, ["174.209.39.102/32"])
   bastion_iam_instance_profile   = aws_iam_instance_profile.bastion_profile.name
+  save_money_on_nat_gateways     = true
 
   # --- Secrets Manager Prereq Secrets --- #
   tfe_license_secret_value             = var.tfe_license_secret_value
