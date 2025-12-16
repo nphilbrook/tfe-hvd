@@ -15,3 +15,19 @@ output "foo" {
 output "gh_v4_hook_ranges" {
   value = local.gh_v4_hook_ranges
 }
+
+output "rds_aurora_global_cluster_id" {
+  value = module.tfe_new.rds_aurora_global_cluster_id
+}
+
+output "rds_aurora_cluster_arn" {
+  value = module.tfe_new.rds_aurora_cluster_arn
+}
+
+output "rds_aurora_cluster_members" {
+  value = module.tfe_new.rds_aurora_cluster_members
+}
+
+output "rds_aurora_cluster_endpoint" {
+  value = module.tfe_new.rds_aurora_cluster_endpoint
+}
