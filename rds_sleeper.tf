@@ -186,6 +186,88 @@ resource "aws_cloudwatch_log_group" "stop_aurora" {
   retention_in_days = 7
 }
 
+#------------------------------------------------------------------------------
+# EventBridge Scheduler
+#------------------------------------------------------------------------------
+
+# IAM Role for EventBridge Scheduler
+resource "aws_iam_role" "scheduler" {
+  name = "rds-cluster-scheduler-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "scheduler.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
+# IAM Policy for Scheduler to invoke Lambda
+resource "aws_iam_role_policy" "scheduler_lambda_invoke" {
+  name = "scheduler-lambda-invoke"
+  role = aws_iam_role.scheduler.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "lambda:InvokeFunction"
+        ]
+        Resource = [
+          aws_lambda_function.start_aurora.arn,
+          aws_lambda_function.stop_aurora.arn
+        ]
+      }
+    ]
+  })
+}
+
+# Schedule to start cluster at 7 AM Eastern (adjusts for DST)
+resource "aws_scheduler_schedule" "start_aurora" {
+  name = "start-aurora-cluster"
+
+  flexible_time_window {
+    mode = "OFF"
+  }
+
+  schedule_expression          = "cron(0 7 * * ? *)"
+  schedule_expression_timezone = "America/New_York"
+
+  target {
+    arn      = aws_lambda_function.start_aurora.arn
+    role_arn = aws_iam_role.scheduler.arn
+  }
+
+  description = "Start Aurora cluster at 7 AM Eastern time daily"
+}
+
+# Schedule to stop cluster at 5 PM Eastern (adjusts for DST)
+resource "aws_scheduler_schedule" "stop_aurora" {
+  name = "stop-aurora-cluster"
+
+  flexible_time_window {
+    mode = "OFF"
+  }
+
+  schedule_expression          = "cron(0 17 * * ? *)"
+  schedule_expression_timezone = "America/New_York"
+
+  target {
+    arn      = aws_lambda_function.stop_aurora.arn
+    role_arn = aws_iam_role.scheduler.arn
+  }
+
+  description = "Stop Aurora cluster at 5 PM Eastern time daily"
+}
+
 # Outputs
 output "start_lambda_arn" {
   description = "ARN of the Lambda function to start Aurora clusters"
