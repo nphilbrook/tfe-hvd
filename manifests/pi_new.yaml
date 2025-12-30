@@ -67,8 +67,11 @@ env:
 # they are directed to the internal service
 # NOTE: this may not be reliable as k8s advises against modifying /etc/hosts
 # manually https://kubernetes.io/docs/tasks/network/customize-hosts-file-for-pods/#adding-additional-entries-with-hostaliases
-# This did work, but I replaced it with the work in ./coredns_configmap.yaml
-# See the other approach in service-internal.yaml and ../r53.tf - this traffic leaves the cluster but not the VPC
+# This did work, but I replaced it with the work in ./coredns_configmap.yaml for cluster-local traffic
+#
+# See the approach for VPC-local but EKS-external in service-internal.yaml and ../r53.tf - 
+#   this traffic leaves the cluster but not the VPC
+# 
 # extraVolumes:
 #   - name: hosts-volume
 #     emptyDir: {}
