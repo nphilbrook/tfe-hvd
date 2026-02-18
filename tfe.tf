@@ -1,8 +1,8 @@
 # Net new TFE instance based on the new non-deprecated prereqs module
 module "tfe_new" {
-  source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
-  version = "0.1.2"
-  # source = "git@github.com:hashicorp/terraform-aws-terraform-enterprise-eks-hvd?ref=main"
+  # source  = "hashicorp/terraform-enterprise-eks-hvd/aws"
+  # version = "0.1.2"
+  source = "git@github.com:hashicorp/terraform-aws-terraform-enterprise-eks-hvd?ref=main"
   # source = "git@github.com:nphilbrook/terraform-aws-terraform-enterprise-eks-hvd?ref=nphilbrook_admin_port"
   # --- Common --- #
   friendly_name_prefix = local.new_friendly_name_prefix
