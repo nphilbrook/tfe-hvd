@@ -15,8 +15,8 @@ module "cert" {
 # cat state.json|jq -r '.resources.[] | select(.type =="acme_certificate") | .instances[0].attributes.private_key_pem' > 2025-11-07_privkey.pem
 
 module "prereqs" {
-  # source = "git@github.com:hashicorp-services/terraform-aws-prereqs?ref=main"
-  source = "git@github.com:nphilbrook/terraform-aws-prereqs?ref=nphilbrook_save_money_on_NATs"
+  source = "git@github.com:hashicorp-services/terraform-aws-prereqs?ref=main"
+  # source = "git@github.com:nphilbrook/terraform-aws-prereqs?ref=nphilbrook_save_money_on_NATs"
 
   # --- Common --- #
   friendly_name_prefix = local.new_friendly_name_prefix
