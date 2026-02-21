@@ -8,6 +8,16 @@ output "new_bastion_public_dns" {
   description = "Public DNS name of bastion EC2 instance."
 }
 
+output "new_bastion_private_ip" {
+  value       = module.prereqs.bastion_private_ip
+  description = "Private IP address of bastion EC2 instance."
+}
+
+output "new_bastion_sg_id" {
+  value       = module.prereqs.bastion_security_group_id
+  description = "Security group ID of bastion EC2 instance."
+}
+
 output "foo" {
   value = var.foo
 }
