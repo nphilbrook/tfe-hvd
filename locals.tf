@@ -1,5 +1,6 @@
 locals {
   primary_region       = "us-west-2"
+  secondary_region     = "us-east-2"
   friendly_name_prefix = "primary"
   common_tags = {
     App                = "tfe"

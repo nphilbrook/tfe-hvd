@@ -35,3 +35,11 @@ data "aws_partition" "current" {}
 data "aws_iam_session_context" "human" {
   arn = "arn:aws:sts::590184029125:assumed-role/aws_nick.philbrook_test-developer/nick.philbrook@hashicorp.com"
 }
+
+data "aws_vpc" "secondary" {
+  provider = aws.secondary
+  filter {
+    name   = "tag:Name"
+    values = ["e2sbx*"]
+  }
+}

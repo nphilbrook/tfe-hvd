@@ -33,6 +33,11 @@ resource "aws_route53_zone" "tfe_internal" {
     vpc_id = module.prereqs.vpc_id
   }
 
+  vpc {
+    vpc_id     = data.aws_vpc.secondary.id
+    vpc_region = local.secondary_region
+  }
+
   tags = merge(
     local.common_tags,
     {

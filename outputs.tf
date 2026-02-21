@@ -18,6 +18,11 @@ output "new_bastion_sg_id" {
   description = "Security group ID of bastion EC2 instance."
 }
 
+output "vpc_id" {
+  value       = module.prereqs.vpc_id
+  description = "ID of the VPC created for TFE."
+}
+
 output "foo" {
   value = var.foo
 }
