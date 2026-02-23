@@ -44,21 +44,21 @@ module "prereqs" {
   create_cloudwatch_log_group = true
 }
 
-module "prereqs_test_bastion" {
-  # source = "git@github.com:hashicorp-services/terraform-aws-prereqs?ref=main"
-  source = "git@github.com:nphilbrook/terraform-aws-prereqs?ref=nphilbrook_bastion_configurable"
+# module "prereqs_test_bastion" {
+#   # source = "git@github.com:hashicorp-services/terraform-aws-prereqs?ref=main"
+#   source = "git@github.com:nphilbrook/terraform-aws-prereqs?ref=nphilbrook_bastion_configurable"
 
-  # --- Common --- #
-  friendly_name_prefix = "test-bastion"
-  common_tags          = local.common_tags
+#   # --- Common --- #
+#   friendly_name_prefix = "test-bastion"
+#   common_tags          = local.common_tags
 
-  # --- Networking --- #
-  create_vpc                     = true
-  vpc_cidr                       = "10.20.0.0/16"
-  public_subnet_cidrs            = ["10.20.0.0/24", "10.20.1.0/24", "10.20.2.0/24"]
-  private_subnet_cidrs           = ["10.20.8.0/21", "10.20.16.0/21", "10.20.24.0/21"]
-  create_bastion                 = true
-  bastion_ec2_keypair_name       = "acme-w2"
-  bastion_cidr_allow_ingress_ssh = concat(var.juniper_junction)
-  save_money_on_nat_gateways     = true
-}
+#   # --- Networking --- #
+#   create_vpc                     = true
+#   vpc_cidr                       = "10.20.0.0/16"
+#   public_subnet_cidrs            = ["10.20.0.0/24", "10.20.1.0/24", "10.20.2.0/24"]
+#   private_subnet_cidrs           = ["10.20.8.0/21", "10.20.16.0/21", "10.20.24.0/21"]
+#   create_bastion                 = true
+#   bastion_ec2_keypair_name       = "acme-w2"
+#   bastion_cidr_allow_ingress_ssh = concat(var.juniper_junction)
+#   save_money_on_nat_gateways     = true
+# }
