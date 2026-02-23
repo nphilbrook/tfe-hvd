@@ -1,0 +1,19 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: nick.philbrook@hashicorp.com
+    # cert-manager will create this secret itself on first run and register a
+    # fresh ACME account. Do not pre-create it unless you want to reuse an
+    # existing account private key.
+    privateKeySecretRef:
+      name: letsencrypt-prod-account-key
+    solvers:
+      - dns01:
+          route53:
+            region: us-west-2
+            # Consider templating this in the upstream HVD module
+            hostedZoneID: Z0044215NNXAVG32DNB6

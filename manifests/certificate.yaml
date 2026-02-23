@@ -1,0 +1,25 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tfe-tls
+  namespace: tfe
+spec:
+  secretName: tfe-certs
+  # Let's Encrypt certs are valid for 90 days.
+  # Renew 15 days early to give time for retries if DNS propagation is slow.
+  renewBefore: 360h
+  dnsNames:
+    # Primary hostname (local.tfe_pi_new_fqdn — the active TFE deployment)
+    - tfe-pi-new.nick-philbrook.sbx.hashidemos.io
+    # Additional SANs — mirrors the SAN list in the acme cert module in prereqs.tf
+    - tfe.nick-philbrook.sbx.hashidemos.io
+    - tfe-pi.nick-philbrook.sbx.hashidemos.io
+    - tfe-pi-new.nick-philbrook.sbx.hashidemos.io
+    - tfe-irsa-new.nick-philbrook.sbx.hashidemos.io
+    - tfe-pi-byo.nick-philbrook.sbx.hashidemos.io
+    - tfe-mixed.nick-philbrook.sbx.hashidemos.io
+    - tfe-pi-byo-mixed.nick-philbrook.sbx.hashidemos.io
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+    group: cert-manager.io
