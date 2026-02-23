@@ -12,7 +12,7 @@
 set -euo pipefail
 
 CERT_MANAGER_VERSION="v1.19.3"
-RELOADER_VERSION="1.4.3"
+RELOADER_VERSION="2.2.8"
 
 # --- Helm repos ---
 helm repo add jetstack https://charts.jetstack.io
