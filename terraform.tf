@@ -21,5 +21,9 @@ terraform {
       source  = "hashicorp/archive"
       version = "~>2.7"
     }
+    hcp = {
+      source  = "hashicorp/hcp"
+      version = "~>0.111"
+    }
   }
 }

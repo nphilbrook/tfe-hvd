@@ -43,3 +43,10 @@ data "aws_vpc" "secondary" {
     values = ["e2sbx*"]
   }
 }
+
+data "hcp_packer_artifact" "bastion" {
+  bucket_name  = "bastion-ubuntu"
+  channel_name = "dev"
+  platform     = "aws"
+  region       = "us-west-2"
+}
