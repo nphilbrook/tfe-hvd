@@ -4,7 +4,7 @@ metadata:
   name: tfe-tls
   namespace: tfe
 spec:
-  secretName: tfe-certs
+  secretName: tfe-certs-cm
   # Let's Encrypt certs are valid for 90 days.
   # Renew 15 days early to give time for retries if DNS propagation is slow.
   renewBefore: 360h

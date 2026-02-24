@@ -1,6 +1,6 @@
-replicaCount: 2
+replicaCount: 1
 tls:
-  certificateSecret: tfe-certs
+  certificateSecret: tfe-certs-cm
 
 image:
  repository: images.releases.hashicorp.com
@@ -38,7 +38,7 @@ service:
 
 deployment:
   annotations:
-    secret.reloader.stakater.com/reload: "tfe-certs"
+    secret.reloader.stakater.com/reload: "tfe-certs-cm"
 env:
   secretRefs:
     - name: tfe-secrets

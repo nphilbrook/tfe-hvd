@@ -1,16 +1,15 @@
-# Testing the non-deprecated version of the prereqs modules
-module "cert" {
-  source        = "git@github.com:hashicorp-services/terraform-acme-tls-aws?ref=main"
-  tls_cert_fqdn = local.tfe_fqdn
-  tls_cert_sans = [
-    local.tfe_pi_fqdn, local.tfe_pi_new_fqdn, local.tfe_irsa_new_fqdn,
-    local.tfe_pi_byo_fqdn, local.tfe_mixed, local.tfe_byo_mixed
-  ]
-  tls_cert_email_address   = "nick.philbrook@hashicorp.com"
-  route53_public_zone_name = local.r53_zone
-}
-
-# quick hack to get the certs and key out of state:
+# This was replaced by cert-manager, see ./manifests/install.sh and the other cert yaml
+# module "cert" {
+#   source        = "git@github.com:hashicorp-services/terraform-acme-tls-aws?ref=main"
+#   tls_cert_fqdn = local.tfe_fqdn
+#   tls_cert_sans = [
+#     local.tfe_pi_fqdn, local.tfe_pi_new_fqdn, local.tfe_irsa_new_fqdn,
+#     local.tfe_pi_byo_fqdn, local.tfe_mixed, local.tfe_byo_mixed
+#   ]
+#   tls_cert_email_address   = "nick.philbrook@hashicorp.com"
+#   route53_public_zone_name = local.r53_zone
+# }
+# quick hack to get the certs and key out of state if you revert to ^ :
 # cat state.json|jq -r '.resources.[] | select(.type =="acme_certificate") | .instances[0].attributes | "\(.certificate_pem)\(.issuer_pem)"' > 2025-11-07_full_chain.pem
 # cat state.json|jq -r '.resources.[] | select(.type =="acme_certificate") | .instances[0].attributes.private_key_pem' > 2025-11-07_privkey.pem
 

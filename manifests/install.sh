@@ -26,10 +26,20 @@ kubectl create namespace reloader     --dry-run=client -o yaml | kubectl apply -
 # --- cert-manager ---
 # Note: no serviceAccount.annotations needed — EKS Pod Identity does not require
 # the eks.amazonaws.com/role-arn annotation that IRSA uses.
+#
+# The two extraArgs below fix DNS-01 propagation checks in split-horizon DNS setups.
+# Without them, cert-manager discovers authoritative nameservers by following the
+# delegation chain from inside the cluster. In this VPC the resolver returns the
+# *private* zone nameservers for nick-philbrook.sbx.hashidemos.io, which don't
+# have the _acme-challenge TXT record and return REFUSED.
+# --dns01-recursive-nameservers forces cert-manager to query public resolvers instead.
+# --dns01-recursive-nameservers-only disables the authoritative NS lookup entirely.
 helm upgrade --install cert-manager jetstack/cert-manager \
   --namespace cert-manager \
   --version "${CERT_MANAGER_VERSION}" \
   --set crds.enabled=true \
+  --set 'extraArgs[0]=--dns01-recursive-nameservers=8.8.8.8:53\,1.1.1.1:53' \
+  --set 'extraArgs[1]=--dns01-recursive-nameservers-only' \
   --wait
 
 # --- Reloader (triggers rolling restarts when the TLS secret is renewed) ---
