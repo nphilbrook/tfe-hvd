@@ -26,28 +26,31 @@ resource "aws_route53_record" "tfe" {
 }
 
 # Create a private hosted zone for internal TFE resolution
-resource "aws_route53_zone" "tfe_internal" {
-  name = "nick-philbrook.sbx.hashidemos.io"
 
-  vpc {
-    vpc_id = module.prereqs.vpc_id
-  }
+# Haha disregard that
+# resource "aws_route53_zone" "tfe_internal" {
+#   name = "nick-philbrook.sbx.hashidemos.io"
 
-  vpc {
-    vpc_id     = data.aws_vpc.secondary.id
-    vpc_region = local.secondary_region
-  }
+#   vpc {
+#     vpc_id = module.prereqs.vpc_id
+#   }
 
-  tags = merge(
-    local.common_tags,
-    {
-      Name    = "${local.new_friendly_name_prefix}-tfe-internal-zone"
-      Purpose = "Internal DNS resolution for TFE"
-    }
-  )
-}
+#   vpc {
+#     vpc_id     = data.aws_vpc.secondary.id
+#     vpc_region = local.secondary_region
+#   }
+
+#   tags = merge(
+#     local.common_tags,
+#     {
+#       Name    = "${local.new_friendly_name_prefix}-tfe-internal-zone"
+#       Purpose = "Internal DNS resolution for TFE"
+#     }
+#   )
+# }
 
 # Data source to find the internal NLB by tags
+# This NLB stil exists without a friendly A Record
 data "aws_lb" "internal" {
   tags = {
     "elbv2.k8s.aws/cluster" = module.tfe_new.eks_cluster_name
@@ -56,10 +59,10 @@ data "aws_lb" "internal" {
 }
 
 # Create a CNAME record that points to the internal NLB
-resource "aws_route53_record" "tfe_internal" {
-  zone_id = aws_route53_zone.tfe_internal.zone_id
-  name    = local.tfe_pi_new_fqdn
-  type    = "CNAME"
-  ttl     = 300
-  records = [data.aws_lb.internal.dns_name]
-}
+# resource "aws_route53_record" "tfe_internal" {
+#   zone_id = aws_route53_zone.tfe_internal.zone_id
+#   name    = local.tfe_pi_new_fqdn
+#   type    = "CNAME"
+#   ttl     = 300
+#   records = [data.aws_lb.internal.dns_name]
+# }

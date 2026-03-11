@@ -1,4 +1,5 @@
 # An additional TFE service that will create an internal AWS NLB
+# Note at present this is dangling without a DNS record
 apiVersion: v1
 kind: Service
 metadata:
