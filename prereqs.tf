@@ -28,7 +28,7 @@ module "prereqs" {
   private_subnet_cidrs           = ["10.9.8.0/21", "10.9.16.0/21", "10.9.24.0/21"]
   create_bastion                 = true
   bastion_ec2_keypair_name       = "acme-w2"
-  bastion_cidr_allow_ingress_ssh = concat(var.juniper_junction)
+  bastion_cidr_allow_ingress_ssh = data.tfe_outputs.azure_hcp_control_outputs.nonsensitive_values.ingress_ips # concat(var.juniper_junction)
   bastion_iam_instance_profile   = aws_iam_instance_profile.bastion_profile.name
   bastion_image_id               = data.hcp_packer_artifact.bastion.external_identifier
   save_money_on_nat_gateways     = true
