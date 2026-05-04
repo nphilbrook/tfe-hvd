@@ -28,4 +28,6 @@ locals {
 
   new_friendly_name_prefix = "new"
   new_vpc_cidr             = "10.9.0.0/16"
+
+  tfe_organization = "philbrook"
 }

@@ -25,5 +25,9 @@ terraform {
       source  = "hashicorp/hcp"
       version = "~>0.111"
     }
+    tfe = {
+      source  = "hashicorp/tfe"
+      version = "~>0.76"
+    }
   }
 }
