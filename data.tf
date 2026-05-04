@@ -50,3 +50,7 @@ data "hcp_packer_artifact" "bastion" {
   platform     = "aws"
   region       = "us-west-2"
 }
+
+data "tfe_outputs" "azure_hcp_control_outputs" {
+  workspace = "azure-hcp-control"
+}
