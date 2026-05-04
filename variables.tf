@@ -23,11 +23,6 @@ variable "tfe_license_secret_value" {
   sensitive = true
 }
 
-variable "juniper_junction" {
-  type    = list(string)
-  default = []
-}
-
 variable "foo" {
   default     = "bar"
   description = "For generating plan changes"

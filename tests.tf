@@ -17,12 +17,12 @@
 #   rds_subnet_ids   = module.tfe_prereqs_w2.db_subnet_ids
 #   redis_subnet_ids = slice(module.tfe_prereqs_w2.redis_subnet_ids, 0, 2)
 #   cidr_allow_ingress_tfe_443 = concat([local.vpc_cidr, "${module.tfe_prereqs_w2.bastion_public_ip}/32"],
-#     var.juniper_junction,
+#     data.tfe_outputs.azure_hcp_control_outputs.nonsensitive_values.ingress_ips,
 #     local.gh_v4_hook_ranges,
 #     local.ngw_cidrs
 #   )
-#   cidr_allow_ingress_tfe_metrics_http  = var.juniper_junction
-#   cidr_allow_ingress_tfe_metrics_https = var.juniper_junction
+#   cidr_allow_ingress_tfe_metrics_http  = data.tfe_outputs.azure_hcp_control_outputs.nonsensitive_values.ingress_ips
+#   cidr_allow_ingress_tfe_metrics_https = data.tfe_outputs.azure_hcp_control_outputs.nonsensitive_values.ingress_ips
 
 #   # --- IAM --- #
 #   create_eks_oidc_provider              = false
@@ -72,12 +72,12 @@
 #   rds_subnet_ids   = module.tfe_prereqs_w2.db_subnet_ids
 #   redis_subnet_ids = slice(module.tfe_prereqs_w2.redis_subnet_ids, 0, 2)
 #   cidr_allow_ingress_tfe_443 = concat([local.vpc_cidr, "${module.tfe_prereqs_w2.bastion_public_ip}/32"],
-#     var.juniper_junction,
+#     data.tfe_outputs.azure_hcp_control_outputs.nonsensitive_values.ingress_ips,
 #     local.gh_v4_hook_ranges,
 #     local.ngw_cidrs
 #   )
-#   cidr_allow_ingress_tfe_metrics_http  = var.juniper_junction
-#   cidr_allow_ingress_tfe_metrics_https = var.juniper_junction
+#   cidr_allow_ingress_tfe_metrics_http  = data.tfe_outputs.azure_hcp_control_outputs.nonsensitive_values.ingress_ips
+#   cidr_allow_ingress_tfe_metrics_https = data.tfe_outputs.azure_hcp_control_outputs.nonsensitive_values.ingress_ips
 
 #   # --- IAM --- #
 #   create_eks_oidc_provider      = true
@@ -125,7 +125,7 @@
 #   rds_subnet_ids   = module.tfe_prereqs_w2.db_subnet_ids
 #   redis_subnet_ids = slice(module.tfe_prereqs_w2.redis_subnet_ids, 0, 2)
 #   cidr_allow_ingress_tfe_443 = concat([local.vpc_cidr, "${module.tfe_prereqs_w2.bastion_public_ip}/32"],
-#     var.juniper_junction,
+#     data.tfe_outputs.azure_hcp_control_outputs.nonsensitive_values.ingress_ips,
 #     local.gh_v4_hook_ranges,
 #     local.ngw_cidrs
 #   )
@@ -174,7 +174,7 @@
 #   rds_subnet_ids   = module.tfe_prereqs_w2.db_subnet_ids
 #   redis_subnet_ids = slice(module.tfe_prereqs_w2.redis_subnet_ids, 0, 2)
 #   cidr_allow_ingress_tfe_443 = concat([local.vpc_cidr, "${module.tfe_prereqs_w2.bastion_public_ip}/32"],
-#     var.juniper_junction,
+#     data.tfe_outputs.azure_hcp_control_outputs.nonsensitive_values.ingress_ips,
 #     local.gh_v4_hook_ranges,
 #     local.ngw_cidrs
 #   )
@@ -224,12 +224,12 @@
 #   rds_subnet_ids   = module.tfe_prereqs_w2.db_subnet_ids
 #   redis_subnet_ids = slice(module.tfe_prereqs_w2.redis_subnet_ids, 0, 2)
 #   cidr_allow_ingress_tfe_443 = concat([local.vpc_cidr, "${module.tfe_prereqs_w2.bastion_public_ip}/32"],
-#     var.juniper_junction,
+#     data.tfe_outputs.azure_hcp_control_outputs.nonsensitive_values.ingress_ips,
 #     local.gh_v4_hook_ranges,
 #     local.ngw_cidrs
 #   )
-#   cidr_allow_ingress_tfe_metrics_http  = var.juniper_junction
-#   cidr_allow_ingress_tfe_metrics_https = var.juniper_junction
+#   cidr_allow_ingress_tfe_metrics_http  = data.tfe_outputs.azure_hcp_control_outputs.nonsensitive_values.ingress_ips
+#   cidr_allow_ingress_tfe_metrics_https = data.tfe_outputs.azure_hcp_control_outputs.nonsensitive_values.ingress_ips
 
 #   # --- IAM --- #
 #   create_eks_oidc_provider              = true
