@@ -68,10 +68,10 @@ resource "aws_iam_role_policy_attachment" "cert_manager_route53" {
 # Binds the IAM role to the cert-manager Kubernetes ServiceAccount.
 # The ServiceAccount name and namespace match the cert-manager Helm chart defaults.
 #------------------------------------------------------------------------------
-resource "aws_eks_pod_identity_association" "cert_manager" {
-  cluster_name    = module.tfe_new.eks_cluster_name
-  namespace       = "cert-manager"
-  service_account = "cert-manager"
-  role_arn        = aws_iam_role.cert_manager.arn
-  tags            = local.common_tags
-}
+# resource "aws_eks_pod_identity_association" "cert_manager" {
+#   cluster_name    = module.tfe_new.eks_cluster_name
+#   namespace       = "cert-manager"
+#   service_account = "cert-manager"
+#   role_arn        = aws_iam_role.cert_manager.arn
+#   tags            = local.common_tags
+# }

@@ -9,10 +9,10 @@ terraform {
       source  = "devops-rob/terracurl"
       version = "~>1.2"
     }
-    acme = {
-      source  = "vancluever/acme"
-      version = "~>2.23"
-    }
+    # acme = {
+    #   source  = "vancluever/acme"
+    #   version = "~>2.23"
+    # }
     local = {
       source  = "hashicorp/local"
       version = "~>2.5"
